@@ -1,15 +1,21 @@
 """
 Code Reader Utility
 Reads and parses Python code from target directory for agent analysis.
+Enforces sandbox security: agents cannot read/write outside target_dir.
 """
 
 import os
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List
+
+
+class SandboxSecurityError(Exception):
+    """Raised when an agent tries to access files outside sandbox."""
+    pass
 
 
 class CodeReader:
-    """Utility for reading and organizing code from target directory."""
+    """Utility for reading and organizing code from target directory with security enforcement."""
 
     def __init__(self, target_dir: str):
         """
@@ -17,10 +23,34 @@ class CodeReader:
         
         Args:
             target_dir: Path to directory containing code to analyze
+            
+        Raises:
+            ValueError: If target_dir doesn't exist
         """
-        self.target_dir = Path(target_dir)
+        self.target_dir = Path(target_dir).resolve()  # Resolve to absolute path
         if not self.target_dir.exists():
             raise ValueError(f"Target directory not found: {target_dir}")
+        if not self.target_dir.is_dir():
+            raise ValueError(f"Target path is not a directory: {target_dir}")
+    
+    def _check_sandbox(self, file_path: Path) -> None:
+        """
+        Verify that file_path is within target_dir (security check).
+        
+        Args:
+            file_path: Path to check
+            
+        Raises:
+            SandboxSecurityError: If path escapes sandbox
+        """
+        try:
+            file_path.resolve().relative_to(self.target_dir)
+        except ValueError:
+            raise SandboxSecurityError(
+                f"❌ SECURITY VIOLATION: Attempted access outside sandbox.\n"
+                f"   Target dir: {self.target_dir}\n"
+                f"   Requested:  {file_path.resolve()}"
+            )
 
     def read_all_python_files(self) -> Dict[str, str]:
         """
@@ -48,8 +78,14 @@ class CodeReader:
             
         Returns:
             File content
+            
+        Raises:
+            SandboxSecurityError: If path escapes sandbox
+            FileNotFoundError: If file doesn't exist
         """
         file_path = self.target_dir / relative_path
+        self._check_sandbox(file_path)  # Security check FIRST
+        
         if not file_path.exists():
             raise FileNotFoundError(f"File not found: {relative_path}")
         
@@ -64,10 +100,14 @@ class CodeReader:
         Args:
             relative_path: Path relative to target_dir
             content: File content to write
+            
+        Raises:
+            SandboxSecurityError: If path escapes sandbox
         """
         file_path = self.target_dir / relative_path
-        file_path.parent.mkdir(parents=True, exist_ok=True)
+        self._check_sandbox(file_path)  # Security check FIRST
         
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
 
