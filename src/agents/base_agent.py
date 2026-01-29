@@ -4,6 +4,7 @@ Provides abstract interface and auto-logging for all refactoring agents.
 """
 
 from abc import ABC, abstractmethod
+import logging
 from src.utils.logger import log_experiment, ActionType
 
 
@@ -23,6 +24,7 @@ class BaseAgent(ABC):
         """
         self.agent_name = agent_name
         self.model = model
+        self.logger = logging.getLogger(agent_name)
 
     def _log_action(self, action: ActionType, prompt: str, response: str, 
                     extra_details: dict = None, status: str = "SUCCESS") -> None:

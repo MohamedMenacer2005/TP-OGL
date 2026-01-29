@@ -1,11 +1,622 @@
 [
-  {
-    "id": "9e82e9b0-9b43-4a78-af43-d5d5ef848a2f",
-    "timestamp": "2025-12-26T01:26:41.177789",
-    "agent": "System",
-    "model": "unknown",
-    "action": "STARTUP",
-    "details": "Target: ./sandbox",
-    "status": "INFO"
-  }
+    {
+        "id": "77d1a5ff-91cb-484e-a16c-ab8b235e609f",
+        "timestamp": "2026-01-30T00:01:38.158373",
+        "agent": "ParallelAuditor",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 3 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpij51wxv6",
+            "output_response": "Audit complete: 6 total issues found, 0 files with errors",
+            "files_audited": 3,
+            "total_issues": 6,
+            "files_with_errors": 0,
+            "parallel_processing": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "d9d7a61e-28d6-4f34-91f0-64eef670290b",
+        "timestamp": "2026-01-30T00:01:38.170220",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function0():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function0\")\n        return None\n\nclass Class0:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module0.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "2e9e9725-f24a-4ed9-9a3f-3bf56f823481",
+        "timestamp": "2026-01-30T00:01:38.185236",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function0():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function0')\n        return None\n\nclass Class0:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module0.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "0fd90c58-15dc-4b3b-81ed-22c17a60eab0",
+        "timestamp": "2026-01-30T00:01:38.198449",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function1():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function1\")\n        return None\n\nclass Class1:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module1.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "3baab288-717c-496d-a4e6-47b567928695",
+        "timestamp": "2026-01-30T00:01:38.211584",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function1():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function1')\n        return None\n\nclass Class1:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module1.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "85db09a5-01aa-4767-b057-baef691d31d0",
+        "timestamp": "2026-01-30T00:01:38.227672",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function2():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function2\")\n        return None\n\nclass Class2:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module2.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "5292aaec-1656-441e-a47b-41e9f5a78864",
+        "timestamp": "2026-01-30T00:01:38.241211",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function2():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function2')\n        return None\n\nclass Class2:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module2.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "8e4d9311-652a-4929-a41e-c412f5f7bd36",
+        "timestamp": "2026-01-30T00:01:38.252179",
+        "agent": "SequentialCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Generated corrections for 3 files",
+            "output_response": "Created 6 corrections addressing 5 critical issues",
+            "files_corrected": 3,
+            "total_corrections": 6,
+            "critical_issues_addressed": 5
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "192870f9-23df-4352-ab1c-d09a8ee6e3c8",
+        "timestamp": "2026-01-30T00:01:38.360985",
+        "agent": "PromptAuditor",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\n\ndef function0():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function0\")\n        return None\n\nclass Class0:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```",
+            "output_response": "Found 2 potential issues in module0.py",
+            "filename": "module0.py",
+            "code_length": 339,
+            "line_count": 17,
+            "issues_found": 2,
+            "issues": [
+                "Bare except clause found (bad practice - catches all exceptions)",
+                "Using print() statements without logging module"
+            ],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "0b5da6c1-a80b-41b4-8f7d-29e9c1074de2",
+        "timestamp": "2026-01-30T00:01:38.368267",
+        "agent": "PromptAuditor",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\n\ndef function2():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function2\")\n        return None\n\nclass Class2:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```",
+            "output_response": "Found 2 potential issues in module2.py",
+            "filename": "module2.py",
+            "code_length": 339,
+            "line_count": 17,
+            "issues_found": 2,
+            "issues": [
+                "Bare except clause found (bad practice - catches all exceptions)",
+                "Using print() statements without logging module"
+            ],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "57155fdc-cff7-4f17-94f8-e13dae9f7891",
+        "timestamp": "2026-01-30T00:01:38.402828",
+        "agent": "PromptAuditor",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 3 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpimve5nj_",
+            "output_response": "Audit complete: 6 total issues found, 0 files with errors",
+            "files_audited": 3,
+            "total_issues": 6,
+            "files_with_errors": 0,
+            "parallel_processing": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "109cd504-c75b-4e85-9a15-1dea82d7666e",
+        "timestamp": "2026-01-30T00:01:38.426370",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function0():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function0\")\n        return None\n\nclass Class0:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module0.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "78d54ac5-fc6e-4fea-8505-1ba009b3113c",
+        "timestamp": "2026-01-30T00:01:38.442374",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function0():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function0')\n        return None\n\nclass Class0:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module0.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "441667ab-f657-4640-a6ed-f1cef49524ad",
+        "timestamp": "2026-01-30T00:01:38.457405",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function1():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function1\")\n        return None\n\nclass Class1:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module1.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "b9294ea0-22ce-43de-a5e2-cc50aafaf8ed",
+        "timestamp": "2026-01-30T00:01:38.471013",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function1():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function1')\n        return None\n\nclass Class1:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module1.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "a977dfb1-b6e7-4f53-90de-437e54cb7d8b",
+        "timestamp": "2026-01-30T00:01:38.486328",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function2():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function2\")\n        return None\n\nclass Class2:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module2.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "f6598afa-b109-44a6-a9a9-e73eb3f807ba",
+        "timestamp": "2026-01-30T00:01:38.502779",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function2():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function2')\n        return None\n\nclass Class2:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module2.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "e01dec46-2cea-4fb5-b0af-3633e6abdb7b",
+        "timestamp": "2026-01-30T00:01:38.515164",
+        "agent": "PromptCorrector",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Generated corrections for 3 files",
+            "output_response": "Created 6 corrections addressing 5 critical issues",
+            "files_corrected": 3,
+            "total_corrections": 6,
+            "critical_issues_addressed": 5
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "5c64a534-9ef6-4c97-ab29-357f46117c53",
+        "timestamp": "2026-01-30T00:01:38.536578",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\n\ndef function1():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function1\")\n        return None\n\nclass Class1:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```",
+            "output_response": "Found 2 potential issues in module1.py",
+            "filename": "module1.py",
+            "code_length": 339,
+            "line_count": 17,
+            "issues_found": 2,
+            "issues": [
+                "Bare except clause found (bad practice - catches all exceptions)",
+                "Using print() statements without logging module"
+            ],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "2f29d0b2-fccd-413c-82d6-7f3ccd0991d0",
+        "timestamp": "2026-01-30T00:01:38.553311",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\n\ndef function2():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function2\")\n        return None\n\nclass Class2:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```",
+            "output_response": "Found 2 potential issues in module2.py",
+            "filename": "module2.py",
+            "code_length": 339,
+            "line_count": 17,
+            "issues_found": 2,
+            "issues": [
+                "Bare except clause found (bad practice - catches all exceptions)",
+                "Using print() statements without logging module"
+            ],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "5a2d5487-e736-46f8-ba42-64ef29d3948f",
+        "timestamp": "2026-01-30T00:01:38.564412",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 3 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpmgubmui4",
+            "output_response": "Audit complete: 6 total issues found, 0 files with errors",
+            "files_audited": 3,
+            "total_issues": 6,
+            "files_with_errors": 0,
+            "parallel_processing": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "2b2dcfdf-020c-4a7e-9816-4ea5e9d7f24a",
+        "timestamp": "2026-01-30T00:01:38.573900",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function0():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function0\")\n        return None\n\nclass Class0:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module0.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "95b992ce-d7a6-4589-a389-83c5ff882ca1",
+        "timestamp": "2026-01-30T00:01:38.594457",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function0():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function0')\n        return None\n\nclass Class0:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module0.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "d524d156-da7d-46ab-bbea-3a98b9aa22fe",
+        "timestamp": "2026-01-30T00:01:38.602735",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function1():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function1\")\n        return None\n\nclass Class1:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module1.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "d58bf6e2-8385-401a-a7ea-7c13d9c40e45",
+        "timestamp": "2026-01-30T00:01:38.625295",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function1():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function1')\n        return None\n\nclass Class1:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module1.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "3214c30d-b06c-4818-b11b-e1e94267a7b0",
+        "timestamp": "2026-01-30T00:01:38.639899",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Bare except clause found (bad practice - catches all exceptions)\n\nOriginal code (preview):\n```python\n\ndef function2():\n    try:\n        result = process_data()\n        print(\"Result:\", result)\n        return result\n    except:\n        print(\"Error in function2\")\n        return None\n\nclass Class2:\n    def __init__(self):\n        self.data = []\n    \n    def add(self, value):\n        self.data.append(value)\n        print(f\"Added {value}\")\n\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 17 → 17 lines (0 lines changed)",
+            "filename": "module2.py",
+            "issue": "Bare except clause found (bad practice - catches all exceptions)",
+            "original_length": 339,
+            "corrected_length": 349,
+            "change_ratio": 1.0294985250737463,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "56946ef5-034e-4de4-abd5-bfcd51867ed5",
+        "timestamp": "2026-01-30T00:01:38.653310",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Fix this issue in the code:\nIssue: Using print() statements without logging module\n\nOriginal code (preview):\n```python\ndef function2():\n    try:\n        result = process_data()\n        print('Result:', result)\n        return result\n    except Exception as e:\n        print('Error in function2')\n        return None\n\nclass Class2:\n\n    def __init__(self):\n        self.data = []\n\n    def add(self, value):\n        self.data.append(value)\n        print(f'Added {value}')\n```\n\nGenerate corrected code that fixes this issue.",
+            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 17 → 19 lines (2 lines changed)",
+            "filename": "module2.py",
+            "issue": "Using print() statements without logging module",
+            "original_length": 349,
+            "corrected_length": 389,
+            "change_ratio": 1.1146131805157593,
+            "was_changed": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "0eff9fd6-e914-4250-a8cf-8fa22293515c",
+        "timestamp": "2026-01-30T00:01:38.653310",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Generated corrections for 3 files",
+            "output_response": "Created 6 corrections addressing 5 critical issues",
+            "files_corrected": 3,
+            "total_corrections": 6,
+            "critical_issues_addressed": 5
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "bee13fde-1fa4-42a8-826c-03e135a7dfc8",
+        "timestamp": "2026-01-30T00:01:38.686812",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\ndef broken(\n  syntax error here\n```",
+            "output_response": "Found 0 potential issues in bad.py",
+            "filename": "bad.py",
+            "code_length": 31,
+            "line_count": 2,
+            "issues_found": 0,
+            "issues": [],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "6de3ccab-8d4a-434e-ae01-5ec74dbbcc20",
+        "timestamp": "2026-01-30T00:01:38.701432",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 1 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpoh_ojca3",
+            "output_response": "Audit complete: 0 total issues found, 0 files with errors",
+            "files_audited": 1,
+            "total_issues": 0,
+            "files_with_errors": 0,
+            "parallel_processing": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "5d938a44-7882-4447-a5ae-1ae565e3f858",
+        "timestamp": "2026-01-30T00:01:38.719170",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\n\nimport logging\n\ndef perfect_function():\n    logging.info(\"Everything is great\")\n    return True\n\n```",
+            "output_response": "Found 0 potential issues in good.py",
+            "filename": "good.py",
+            "code_length": 97,
+            "line_count": 6,
+            "issues_found": 0,
+            "issues": [],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "72f8eab2-1d42-4fd2-89cc-a9dc4f4b80cf",
+        "timestamp": "2026-01-30T00:01:38.734209",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 1 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpja42ph_p",
+            "output_response": "Audit complete: 0 total issues found, 0 files with errors",
+            "files_audited": 1,
+            "total_issues": 0,
+            "files_with_errors": 0,
+            "parallel_processing": true
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "03731931-b9f2-482a-b1ce-e5f51e935538",
+        "timestamp": "2026-01-30T00:01:38.747892",
+        "agent": "CorrectorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Generated corrections for 0 files",
+            "output_response": "Created 0 corrections addressing 0 critical issues",
+            "files_corrected": 0,
+            "total_corrections": 0,
+            "critical_issues_addressed": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "6ef71c70-4feb-4a29-be0c-1da028b75fcb",
+        "timestamp": "2026-01-30T00:01:38.751892",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze this Python code for quality issues:\n```python\n\n# -*- coding: utf-8 -*-\ndef greet():\n    message = \"Hello, 世界! 🌍\"\n    print(message)\n\n```",
+            "output_response": "Found 1 potential issues in unicode.py",
+            "filename": "unicode.py",
+            "code_length": 86,
+            "line_count": 5,
+            "issues_found": 1,
+            "issues": [
+                "Using print() statements without logging module"
+            ],
+            "complex_functions": 0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "c5832bda-90f0-430e-ac4a-4608a0624700",
+        "timestamp": "2026-01-30T00:01:38.782129",
+        "agent": "AuditorAgent",
+        "model": "gemini-1.5-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 1 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmp6w2yi_2d",
+            "output_response": "Audit complete: 1 total issues found, 0 files with errors",
+            "files_audited": 1,
+            "total_issues": 1,
+            "files_with_errors": 0,
+            "parallel_processing": true
+        },
+        "status": "SUCCESS"
+    }
 ]
