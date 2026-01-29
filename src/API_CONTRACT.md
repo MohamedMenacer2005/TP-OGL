@@ -201,6 +201,114 @@ reader.write_file("../outside.py", "...") # ❌ SandboxSecurityError
 
 ---
 
+## Code Diff API (Phase 2)
+
+**Module**: `src.utils.code_diff`
+
+### `CodeDiff.compare_code(before: str, after: str) -> DiffStats`
+Compare two code versions.
+
+```python
+from src.utils.code_diff import CodeDiff
+
+stats = CodeDiff.compare_code(before_code, after_code)
+# DiffStats: additions, deletions, modifications, similarity_ratio
+```
+
+### `CodeDiff.get_changed_functions(before: str, after: str) -> Dict`
+Identify which functions changed.
+
+```python
+changes = CodeDiff.get_changed_functions(before, after)
+# {'func_name': 'added'|'removed'|'modified', ...}
+```
+
+---
+
+## Metrics API (Phase 2)
+
+**Module**: `src.utils.metrics`
+
+### `MetricsCalculator.calculate(code: str) -> CodeMetrics`
+Calculate code quality metrics.
+
+```python
+from src.utils.metrics import MetricsCalculator
+
+metrics = MetricsCalculator.calculate(code)
+# CodeMetrics: lines_of_code, complexity, maintainability_index, etc.
+```
+
+### `MetricsComparison.compare(before: str, after: str) -> Dict`
+Compare metrics between versions.
+
+```python
+comparison = MetricsComparison.compare(before, after)
+# {"before": {...}, "after": {...}, "changes": {...}}
+```
+
+---
+
+## Import Extractor API (Phase 2)
+
+**Module**: `src.utils.import_extractor`
+
+### `ImportExtractor.extract_imports(code: str) -> Dict`
+Extract all imports from code.
+
+```python
+from src.utils.import_extractor import ImportExtractor
+
+imports = ImportExtractor.extract_imports(code)
+# {"absolute": [...], "from_imports": [...], "all_modules": [...]}
+```
+
+### `ImportExtractor.categorize_imports(imports: Dict) -> Dict`
+Categorize imports: stdlib, third-party, local.
+
+```python
+categories = ImportExtractor.categorize_imports(imports)
+# {"stdlib": [...], "third_party": [...], "local": [...]}
+```
+
+### `ImportExtractor.find_unused_imports(code: str) -> List`
+Detect unused imports.
+
+```python
+unused = ImportExtractor.find_unused_imports(code)
+# List of import names never used in code
+```
+
+---
+
+## Result Aggregator API (Phase 2)
+
+**Module**: `src.utils.result_aggregator`
+
+### `ResultAggregator` & `IterationResult`
+Collect agent outputs into structured results.
+
+```python
+from src.utils.result_aggregator import ResultAggregator, ResultBuilder
+
+aggregator = ResultAggregator()
+
+# Build iteration result
+result = (ResultBuilder(iteration_num=1)
+          .with_auditor(output_dict)
+          .with_fixer(output_dict)
+          .with_judge(output_dict, decision="ACCEPT")
+          .build())
+
+aggregator.results.append(result)
+
+# Get summary
+summary = aggregator.get_summary()
+# {"total_iterations": 1, "accepted": 1, "rejected": 0, ...}
+```
+
+---
+
 ## API Stability
 
 These APIs are **stable** for Phase 1-2. If you need to change signatures:
