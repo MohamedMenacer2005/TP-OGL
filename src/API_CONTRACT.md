@@ -203,9 +203,11 @@ reader.write_file("../outside.py", "...") # ❌ SandboxSecurityError
 
 ## API Stability
 
-These APIs are **stable** for Phase 1. If you need to change signatures:
+These APIs are **stable** for Phase 1-2. If you need to change signatures:
 1. **Notify all team members immediately**
 2. **Update this document**
 3. **Provide migration path for dependent code**
 
 Agents depend on these interfaces functioning exactly as documented.
+
+**Note**: Feedback loop orchestration (retry logic, iteration management) is the **Orchestrateur (Lead Dev)** responsibility, not toolsmith. See `src/orchestration/` for execution graph and orchestrator logic.
