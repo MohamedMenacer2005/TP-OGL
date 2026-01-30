@@ -82,7 +82,7 @@ print("\n" + "=" * 70)
 print("STEP 3: Comprehensive Analysis")
 print("=" * 70)
 
-analysis = test_and_analyze("fibonacci_buggy.py", "test_fibonacci.py")
+analysis = run_and_analyze("fibonacci_buggy.py", "test_fibonacci.py")
 
 print(f"\n🎯 VERDICT: {analysis['overall_status'].upper()}")
 print(f"\n📊 Details:")

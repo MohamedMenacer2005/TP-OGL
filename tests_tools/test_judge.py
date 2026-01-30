@@ -6,7 +6,7 @@ Tests script execution, pytest running, and timeout protection.
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.tools import run_script, run_pytest, test_and_analyze, write_file
+from src.tools import run_script, run_pytest, run_and_analyze, write_file
 
 def test_judge():
     print("=" * 60)
@@ -143,8 +143,8 @@ def test_another_fail():
     except Exception as e:
         print(f"✗ Error: {e}")
     
-    # Test 7: Comprehensive test_and_analyze
-    print("\nTest 7: test_and_analyze() - COMPREHENSIVE analysis")
+    # Test 7: Comprehensive run_and_analyze
+    print("\nTest 7: run_and_analyze() - COMPREHENSIVE analysis")
     complete_script = """
 \"\"\"A simple calculator module.\"\"\"
 
@@ -177,7 +177,7 @@ def test_multiply():
         write_file("calculator.py", complete_script)
         write_file("test_calculator.py", complete_tests)
         
-        result = test_and_analyze("calculator.py", "test_calculator.py")
+        result = run_and_analyze("calculator.py", "test_calculator.py")
         
         print(f"✓ Comprehensive analysis completed")
         print(f"  Overall status: {result['overall_status']}")
@@ -193,10 +193,10 @@ def test_multiply():
     except Exception as e:
         print(f"✗ Error: {e}")
     
-    # Test 8: test_and_analyze with infinite loop
-    print("\nTest 8: test_and_analyze() detects INFINITE LOOP")
+    # Test 8: run_and_analyze with infinite loop
+    print("\nTest 8: run_and_analyze() detects INFINITE LOOP")
     try:
-        result = test_and_analyze("infinite_loop.py")
+        result = run_and_analyze("infinite_loop.py")
         print(f"✓ Analysis completed")
         print(f"  Overall status: {result['overall_status']}")
         print(f"  Timeout detected: {result['script_execution']['timeout']}")

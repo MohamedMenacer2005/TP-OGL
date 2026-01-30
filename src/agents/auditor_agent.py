@@ -25,6 +25,7 @@ from src.utils.logger import ActionType
 from src.utils.code_reader import CodeReader
 from src.utils.pylint_runner import PylintRunner
 from src.utils.pytest_runner import PytestRunner
+from src.utils.llm_client import LLMClient
 
 
 # ============================================================================
@@ -283,6 +284,7 @@ class AuditorAgent(BaseAgent):
         self.code_reader: Optional[CodeReader] = None
         self.pylint_runner: Optional[PylintRunner] = None
         self.pytest_runner: Optional[PytestRunner] = None
+        self.llm_client: Optional[LLMClient] = None
         self.max_workers = max_workers
         self.ast_analyzer = ASTAnalyzer()
     
@@ -364,6 +366,57 @@ class AuditorAgent(BaseAgent):
             error=None
         )
     
+    def analyze_semantics_with_llm(self, code: str, filename: str = "unknown.py") -> List[str]:
+        """
+        Use LLM to detect potential logic errors and semantic issues.
+        
+        Args:
+            code: Python code to analyze
+            filename: Optional filename for context
+            
+        Returns:
+            List of potential semantic issues found
+        """
+        if not self.llm_client:
+            return []
+        
+        try:
+            # Ask LLM to analyze the code for logic errors
+            preview = truncate_code(code, max_lines=30)
+            prompt = f"""Analyze this Python code for logical errors and potential bugs:
+
+```python
+{preview}
+```
+
+Look for:
+1. Operations that might be incorrect (e.g., using - instead of +, + instead of *)
+2. Functions with names that don't match their behavior
+3. Off-by-one errors
+4. Incorrect comparisons or conditions
+5. Missing return statements
+
+Respond with a concise list of issues, if any. If no issues, respond with 'No semantic issues detected.'"""
+            
+            response = self.llm_client.query(prompt)
+            
+            if response and "no semantic issues" not in response.lower():
+                # Parse response to extract issues
+                issues = [
+                    line.strip() 
+                    for line in response.split('\n') 
+                    if line.strip() and not line.strip().startswith('#')
+                ]
+                
+                self.logger.info(f"LLM detected {len(issues)} semantic issues in {filename}")
+                return issues
+            
+            return []
+        
+        except Exception as e:
+            self.logger.debug(f"LLM semantic analysis failed: {e}")
+            return []
+    
     def _process_single_file(self, filename: str, target_dir: Path) -> FileAuditResult:
         """
         Process a single file (used for parallel execution).
@@ -385,6 +438,13 @@ class AuditorAgent(BaseAgent):
             
             # Run AST-based analysis
             analysis = self.analyze(code, filename)
+            
+            # Run semantic analysis with LLM to detect logic errors
+            if not filename.startswith("test_"):  # Skip test files
+                semantic_issues = self.analyze_semantics_with_llm(code, filename)
+                if semantic_issues:
+                    analysis["issues"].extend(semantic_issues)
+                    analysis["issue_count"] = len(analysis["issues"])
             
             # Run pylint
             try:
@@ -483,6 +543,16 @@ class AuditorAgent(BaseAgent):
         try:
             self.code_reader = CodeReader(target_dir)
             self.pylint_runner = PylintRunner(target_dir)
+            self.pytest_runner = PytestRunner(target_dir)
+            
+            # Try to initialize LLM for semantic analysis (optional)
+            try:
+                self.llm_client = LLMClient()
+                self.logger.info("LLM client initialized for semantic analysis")
+            except Exception as llm_err:
+                self.logger.warning(f"LLM initialization skipped: {llm_err}. Semantic analysis disabled.")
+                self.llm_client = None
+            
             self.logger.info(f"Initialized tools for directory: {target_dir}")
         except Exception as e:
             self.logger.error(f"Failed to initialize tools: {e}", exc_info=True)
@@ -547,6 +617,65 @@ class AuditorAgent(BaseAgent):
             self.logger.info("Processing files sequentially")
             for filename in files:
                 audit_results[filename] = self._process_single_file(filename, validated_path)
+        
+        # Run tests to detect runtime/logic errors
+        self.logger.info("Running tests to detect runtime and logic errors...")
+        try:
+            test_result = self.pytest_runner.run_tests()
+            
+            if not test_result.get("success", True):
+                # Tests failed - add these as issues
+                test_issues = []
+                
+                # Parse test output to extract meaningful failure messages
+                # Look for assertion failures with actual vs expected values
+                full_output = "\n".join(test_result.get("messages", []))
+                
+                # Extract specific assertion failures like "assert -1 == 5"
+                import re
+                assertions = re.findall(r"assert\s+([^\n]+)", full_output)
+                for assertion in assertions:
+                    test_issues.append(f"Assertion failed: {assertion.strip()}")
+                
+                # If no specific assertions, look for generic test names
+                if not test_issues:
+                    for msg in test_result.get("messages", []):
+                        if "FAILED" in msg:
+                            # Extract test name like "test_add" from "test_calculator.py::test_add FAILED"
+                            test_match = re.search(r"(test_\w+)\s+FAILED", msg)
+                            if test_match:
+                                test_name = test_match.group(1)
+                                test_issues.append(f"Test {test_name} is failing - check logic")
+                        elif "assert" in msg:
+                            test_issues.append(f"Test failure: {msg.strip()}")
+                
+                # If we found specific assertion messages, use those
+                if test_issues:
+                    # Find the main module file (likely first non-test file)
+                    main_file = next((f for f in files if not f.startswith("test_")), files[0] if files else None)
+                    
+                    if main_file and main_file in audit_results:
+                        # Add test failures as issues for the main module
+                        audit_results[main_file]["analysis"]["issues"].extend(test_issues[:5])
+                        audit_results[main_file]["analysis"]["issue_count"] = len(audit_results[main_file]["analysis"]["issues"])
+                        self.logger.info(f"Added {len(test_issues)} test failure issues to {main_file}")
+                
+                # Log test execution details
+                self._log_action(
+                    action=ActionType.DEBUG,
+                    prompt=f"Run tests on {target_dir}",
+                    response=f"Test execution: {test_result['failed']} failed, {test_result['errors']} errors",
+                    extra_details={
+                        "test_passed": False,
+                        "test_failed": test_result.get("failed", 0),
+                        "test_errors": test_result.get("errors", 0),
+                        "test_messages": test_result.get("messages", [])[:3]  # First 3 messages
+                    }
+                )
+            else:
+                self.logger.info("All tests passed - no runtime errors detected")
+        except Exception as e:
+            self.logger.warning(f"Test execution failed during audit: {e}")
         
         # Aggregate results
         all_issues: List[str] = []

@@ -53,9 +53,9 @@ class PytestRunner:
             target_path = self.target_dir
 
         try:
-            # Run pytest with JSON output
+            # Run pytest with JSON output using python -m pytest for cross-platform compatibility
             result = subprocess.run(
-                ["pytest", str(target_path), "-v", "--tb=short"],
+                ["python", "-m", "pytest", str(target_path), "-v", "--tb=short"],
                 capture_output=True,
                 text=True,
                 timeout=60
