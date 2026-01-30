@@ -159,6 +159,18 @@ def validate_experiment_data():
 
     print("✅ experiment_data.json is FULLY VALIDATED (per-action + global)")
 
+# ----------------Reset the logs file ---------------- #
 
+def reset_experiment_log() -> None:
+    """
+    Erases the content of experiment_data.json.
+    Must be called ONCE at the beginning of a refactoring run.
+    """
+    os.makedirs("logs", exist_ok=True)
+
+    with open(LOG_FILE, "w", encoding="utf-8") as f:
+        json.dump([], f, indent=2)
+
+    
 if __name__ == "__main__":
    validate_experiment_data()
