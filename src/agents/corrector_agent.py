@@ -23,6 +23,7 @@ import re
 
 from src.agents.base_agent import BaseAgent
 from src.utils.logger import ActionType
+from src.utils.prompt_manager import PromptManager
 from src.utils.code_reader import CodeReader
 from src.utils.llm_client import LLMClient
 from src.utils.metrics import MetricsCalculator
@@ -374,6 +375,7 @@ class CorrectorAgent(BaseAgent):
         self.transformer = ASTTransformer()
         self.use_llm = use_llm
         self.llm_client: Optional[LLMClient] = None
+        self.prompt_manager = PromptManager()
         
         # Initialize LLM client if requested
         if use_llm:
@@ -405,7 +407,7 @@ class CorrectorAgent(BaseAgent):
             raise ValueError("Cannot analyze empty code")
         
         preview = truncate_code(code)
-        prompt = f"Analyze this code for correction opportunities:\n```python\n{preview}\n```"
+        prompt = self.prompt_manager.format("corrector_analyze", preview=preview)
         
         opportunities = []
         
@@ -541,15 +543,7 @@ class CorrectorAgent(BaseAgent):
             raise ValueError("Cannot correct empty code")
         
         preview = truncate_code(code, max_lines=20)
-        prompt = f"""Fix this issue in the code:
-Issue: {issue}
-
-Original code (preview):
-```python
-{preview}
-```
-
-Generate corrected code that fixes this issue."""
+        prompt = self.prompt_manager.format("corrector_fix", issue=issue, preview=preview)
         
         # Choose correction strategy
         if self.use_llm and self.llm_client:

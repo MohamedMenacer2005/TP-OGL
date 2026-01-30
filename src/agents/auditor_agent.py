@@ -22,6 +22,7 @@ from pathlib import Path
 
 from src.agents.base_agent import BaseAgent
 from src.utils.logger import ActionType
+from src.utils.prompt_manager import PromptManager
 from src.utils.code_reader import CodeReader
 from src.utils.pylint_runner import PylintRunner
 from src.utils.pytest_runner import PytestRunner
@@ -287,6 +288,7 @@ class AuditorAgent(BaseAgent):
         self.llm_client: Optional[LLMClient] = None
         self.max_workers = max_workers
         self.ast_analyzer = ASTAnalyzer()
+        self.prompt_manager = PromptManager()
     
     def analyze(self, code: str, filename: str = "unknown.py") -> AnalysisResult:
         """
@@ -307,7 +309,7 @@ class AuditorAgent(BaseAgent):
         
         lines = code.splitlines()
         preview = truncate_code(code)
-        prompt = f"Analyze this Python code for quality issues:\n```python\n{preview}\n```"
+        prompt = self.prompt_manager.format("auditor_analyze", preview=preview)
         
         issues = []
         
@@ -383,20 +385,7 @@ class AuditorAgent(BaseAgent):
         try:
             # Ask LLM to analyze the code for logic errors
             preview = truncate_code(code, max_lines=30)
-            prompt = f"""Analyze this Python code for logical errors and potential bugs:
-
-```python
-{preview}
-```
-
-Look for:
-1. Operations that might be incorrect (e.g., using - instead of +, + instead of *)
-2. Functions with names that don't match their behavior
-3. Off-by-one errors
-4. Incorrect comparisons or conditions
-5. Missing return statements
-
-Respond with a concise list of issues, if any. If no issues, respond with 'No semantic issues detected.'"""
+            prompt = self.prompt_manager.format("auditor_semantic", preview=preview)
             
             response = self.llm_client.query(prompt)
             

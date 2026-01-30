@@ -6,6 +6,7 @@ Provides interface to Google Generative AI (Gemini) for semantic code analysis a
 import os
 from typing import Optional, Dict, Any
 import logging
+from src.utils.prompt_manager import PromptManager
 
 try:
     import google.generativeai as genai
@@ -60,6 +61,8 @@ class LLMClient:
         except Exception as e:
             logger.error(f"Failed to initialize LLM client: {e}")
             raise RuntimeError(f"LLM initialization failed: {e}") from e
+
+        self.prompt_manager = PromptManager()
     
     def generate_correction(self, 
                           code: str, 
@@ -86,27 +89,12 @@ class LLMClient:
         if not issue or not issue.strip():
             raise ValueError("Issue cannot be empty")
         
-        prompt = f"""You are an expert Python code refactoring assistant.
-Fix the following issue in this Python code:
-
-ISSUE: {issue}
-
-ORIGINAL CODE:
-```python
-{code[:2000]}  # Truncate to avoid token limits
-```
-
-{f"CONTEXT: {context}" if context else ""}
-
-REQUIREMENTS:
-- Return ONLY the corrected code block, no explanations
-- Maintain the same functionality
-- Fix the specific issue mentioned
-- Use best practices
-- Include necessary imports if added
-
-CORRECTED CODE:
-```python"""
+        prompt = self.prompt_manager.format(
+            "llm_correction",
+            code=code[:2000],
+            issue=issue,
+            context=context or ""
+        )
         
         try:
             logger.debug(f"Sending correction request to LLM for issue: {issue}")
@@ -149,16 +137,10 @@ CORRECTED CODE:
         if not code or not code.strip():
             raise ValueError("Code cannot be empty")
         
-        prompt = f"""Analyze this Python code for quality issues. 
-Return a JSON response with this structure:
-{{"issues": ["issue1", "issue2"], "severity": "low|medium|high", "fixable": true|false}}
-
-CODE:
-```python
-{code[:2000]}
-```
-
-RESPONSE (JSON only, no markdown):"""
+        prompt = self.prompt_manager.format(
+            "llm_quality",
+            code=code[:2000]
+        )
         
         try:
             response = self.client.generate_content(
@@ -210,15 +192,11 @@ RESPONSE (JSON only, no markdown):"""
         if not code or not code.strip():
             raise ValueError("Code cannot be empty")
         
-        prompt = f"""Suggest up to {max_suggestions} high-impact improvements for this Python code.
-Return as a JSON array: [{{"issue": "...", "fix": "...", "priority": "high|medium|low"}}, ...]
-
-CODE:
-```python
-{code[:2000]}
-```
-
-RESPONSE (JSON array only):"""
+        prompt = self.prompt_manager.format(
+            "llm_suggestions",
+            max_suggestions=str(max_suggestions),
+            code=code[:2000]
+        )
         
         try:
             response = self.client.generate_content(
