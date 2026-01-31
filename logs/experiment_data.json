@@ -1,14 +1,28 @@
 [
     {
-        "id": "231d11f1-9b65-4346-9486-4806210cd70c",
-        "timestamp": "2026-01-31T15:45:20.447613",
-        "agent": "AuditorAgent",
-        "model": "models/gemini-2.0-flash",
+        "id": "63749b0f-3bf0-4df4-8d51-38abbec3a26a",
+        "timestamp": "2026-01-31T17:37:44.884398",
+        "agent_name": "AuditorAgent",
+        "model_used": "models/gemini-2.0-flash",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Audited 3 files in ./sandbox",
+            "input_prompt": "Analyze code quality with pylint for test_project\\exemple.py",
+            "output_response": "Pylint score: 0.00/10",
+            "filename": "test_project\\exemple.py",
+            "pylint_score": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "6d112654-0d2e-4785-a323-2fef76ed7d08",
+        "timestamp": "2026-01-31T17:37:45.349730",
+        "agent_name": "AuditorAgent",
+        "model_used": "models/gemini-2.0-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 6 files in ./sandbox",
             "output_response": "Audit complete: 1 total issues found, 0 files with errors",
-            "files_audited": 3,
+            "files_audited": 6,
             "total_issues": 1,
             "files_with_errors": 0,
             "parallel_processing": true
@@ -16,10 +30,10 @@
         "status": "SUCCESS"
     },
     {
-        "id": "ec897045-7291-4b40-be98-7775a9430d14",
-        "timestamp": "2026-01-31T15:45:21.536341",
-        "agent": "CorrectorAgent",
-        "model": "models/gemini-2.0-flash",
+        "id": "86a77251-c988-4095-a262-cd8204c1124b",
+        "timestamp": "2026-01-31T17:37:46.691365",
+        "agent_name": "CorrectorAgent",
+        "model_used": "models/gemini-2.0-flash",
         "action": "FIX",
         "details": {
             "input_prompt": "Attempted fix: File is long (103 lines), consider splitting into modules",
@@ -30,10 +44,10 @@
         "status": "FAILURE"
     },
     {
-        "id": "0d0caae0-f109-4881-8b5b-ed48512368fd",
-        "timestamp": "2026-01-31T15:45:21.560107",
-        "agent": "CorrectorAgent",
-        "model": "models/gemini-2.0-flash",
+        "id": "3dc9a95f-d54b-483a-99fe-34788eb1538e",
+        "timestamp": "2026-01-31T17:37:46.702286",
+        "agent_name": "CorrectorAgent",
+        "model_used": "models/gemini-2.0-flash",
         "action": "CODE_GEN",
         "details": {
             "input_prompt": "Generated corrections for 0 files",
@@ -41,6 +55,23 @@
             "files_corrected": 0,
             "total_corrections": 0,
             "critical_issues_addressed": 1
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "dcee40ee-a396-4302-9c78-6042b0792913",
+        "timestamp": "2026-01-31T17:37:47.177093",
+        "agent_name": "JudgeAgent",
+        "model_used": "models/gemini-2.0-flash",
+        "action": "DEBUG",
+        "details": {
+            "input_prompt": "Execute tests on ./sandbox",
+            "output_response": "Test execution completed: 10 passed, 0 failed, 0 errors",
+            "target_dir": "./sandbox",
+            "passed": 10,
+            "failed": 0,
+            "errors": 0,
+            "total_issues": 0
         },
         "status": "SUCCESS"
     }

@@ -15,10 +15,10 @@ try:
         action_types = set(entry['action'] for entry in data)
         print(f"✓ ActionTypes used: {action_types}")
         
-        # Check for required fields
+        # Check for required fields (ENSI spec)
         all_valid = True
         for i, entry in enumerate(data):
-            required = ['id', 'timestamp', 'agent', 'model', 'action', 'details', 'status']
+            required = ['id', 'timestamp', 'agent_name', 'model_used', 'action', 'details', 'status']
             for field in required:
                 if field not in entry:
                     print(f"✗ Entry {i} missing field: {field}")
@@ -32,7 +32,7 @@ try:
                     all_valid = False
         
         if all_valid:
-            print(f"✓ All entries are properly formatted")
+            print(f"✓ All entries are properly formatted (ENSI spec compliant)")
         else:
             print(f"✗ Some entries have missing fields")
             sys.exit(1)
