@@ -1,0 +1,36 @@
+{
+  "category": "Style Issues",
+  "count": 5,
+  "datasets": [
+    {
+      "id": 1,
+      "name": "Unused imports",
+      "file": "issue_1.py",
+      "expected_file": "issue_1_expected.py"
+    },
+    {
+      "id": 2,
+      "name": "Non-standard variable naming (snake_case)",
+      "file": "issue_2.py",
+      "expected_file": "issue_2_expected.py"
+    },
+    {
+      "id": 3,
+      "name": "Function with low cohesion (missing docstring)",
+      "file": "issue_3.py",
+      "expected_file": "issue_3_expected.py"
+    },
+    {
+      "id": 4,
+      "name": "Line too long",
+      "file": "issue_4.py",
+      "expected_file": "issue_4_expected.py"
+    },
+    {
+      "id": 5,
+      "name": "Bare except clause (catches everything)",
+      "file": "issue_5.py",
+      "expected_file": "issue_5_expected.py"
+    }
+  ]
+}
