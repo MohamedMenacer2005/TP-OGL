@@ -1,0 +1,11 @@
+{
+  "auditor_analyze": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n{preview}\n```",
+  "auditor_semantic": "Logic errors in code (only from evidence). One per line.\n```\n{preview}\n```\nErrors:",
+  "corrector_analyze": "Fixable issues only. One per line or 'None'.\n```\n{preview}\n```",
+  "corrector_fix": "Fix ONLY: {issue}\nReturn corrected code.\n```\n{preview}\n```\nFixed:",
+  "simple_analyzer_review": "Code issues? One per line or 'None'.\n```\n{preview}\n```",
+  "llm_correction": "Fix {issue}. No extra explanation.\n{context}\n```\n{code}\n```",
+  "llm_quality": "Return JSON only: {{\"issues\":[...],\"severity\":\"low|med|high\",\"fixable\":true|false}}.\n```\n{code}\n```",
+  "llm_suggestions": "{max_suggestions} improvements JSON only: [{{\"issue\":\"...\",\"priority\":\"hi|med|lo\"}}].\n```\n{code}\n```",
+  "optimizer_enhance": "Improve code quality & pylint score for {filename}. Fix style, naming, docstrings. Return corrected code only.\n```python\n{preview}\n```\nOptimized:"
+}

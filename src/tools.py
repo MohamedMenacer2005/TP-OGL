@@ -678,7 +678,7 @@ def run_script(script_path: str, timeout: int = 5, args: Optional[List[str]] = N
         }
 
 
-def test_and_analyze(script_path: str, test_path: Optional[str] = None) -> Dict[str, Any]:
+def run_and_analyze(script_path: str, test_path: Optional[str] = None) -> Dict[str, Any]:
     """
     Comprehensive testing: runs the script, checks syntax, analyzes quality, and runs tests.
     
@@ -1627,7 +1627,7 @@ TOOLS_MAPPING: Dict[str, Callable] = {
     # Increment 3: Judge (Execution & Testing)
     'run_script': run_script,
     'run_pytest': run_pytest,
-    'test_and_analyze': test_and_analyze,
+    'test_and_analyze': run_and_analyze,
     
     # Increment 4: Polisher (Quality & Formatter)
     'apply_black_formatting': apply_black_formatting,

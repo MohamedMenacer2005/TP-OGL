@@ -4,7 +4,9 @@ Provides abstract interface and auto-logging for all refactoring agents.
 """
 
 from abc import ABC, abstractmethod
+import logging
 from src.utils.logger import log_experiment, ActionType
+from src.utils.prompt_manager import PromptManager
 
 
 class BaseAgent(ABC):
@@ -13,16 +15,18 @@ class BaseAgent(ABC):
     Handles logging automatically; child agents focus on analysis/generation logic.
     """
 
-    def __init__(self, agent_name: str, model: str = "gemini-1.5-flash"):
+    def __init__(self, agent_name: str, model: str = "models/gemini-2.0-flash"):
         """
         Initialize agent.
         
         Args:
             agent_name: Unique identifier for this agent (e.g., "CodeAuditor", "Refactorer")
-            model: LLM model to use (default: gemini-1.5-flash)
+            model: LLM model to use (default: models/gemini-2.0-flash)
         """
         self.agent_name = agent_name
         self.model = model
+        self.logger = logging.getLogger(agent_name)
+        self.prompt_manager = PromptManager()
 
     def _log_action(self, action: ActionType, prompt: str, response: str, 
                     extra_details: dict = None, status: str = "SUCCESS") -> None:
@@ -90,7 +94,8 @@ class SimpleAnalyzer(BaseAgent):
 
     def analyze(self, code: str, filename: str = "unknown.py") -> dict:
         """Log that code was read (no actual analysis yet)."""
-        prompt = f"Review this Python code for quality issues:\n```python\n{code[:500]}\n```"
+        preview = code[:500]
+        prompt = self.prompt_manager.format("simple_analyzer_review", preview=preview)
         response = f"Code file '{filename}' has {len(code)} characters. Analysis would go here."
         
         self._log_action(
