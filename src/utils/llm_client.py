@@ -8,6 +8,10 @@ from typing import Optional, Dict, Any
 import logging
 from src.utils.prompt_manager import PromptManager
 
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 try:
     import google.generativeai as genai
 except ImportError:

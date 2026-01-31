@@ -20,6 +20,10 @@ from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 from src.agents.base_agent import BaseAgent
 from src.utils.logger import ActionType
 from src.utils.prompt_manager import PromptManager
@@ -271,7 +275,7 @@ class AuditorAgent(BaseAgent):
     
     def __init__(self, 
                  agent_name: str = "AuditorAgent", 
-                 model: str = "gemini-1.5-flash",
+                 model: str = "models/gemini-2.0-flash",
                  max_workers: int = AuditorConfig.MAX_WORKERS):
         """
         Initialize auditor.
@@ -443,6 +447,25 @@ class AuditorAgent(BaseAgent):
                     issue_count=len(pylint_result.get("messages", [])),
                     messages=pylint_result.get("messages", [])
                 )
+                
+                # Log pylint score separately (score only, no detailed messages)
+                pylint_prompt = f"Analyze code quality with pylint for {filename}"
+                pylint_response = f"Pylint score: {pylint_summary['score']:.2f}/10"
+                
+                self._log_action(
+                    action=ActionType.ANALYSIS,
+                    prompt=pylint_prompt,
+                    response=pylint_response,
+                    extra_details={
+                        "filename": filename,
+                        "pylint_score": pylint_summary["score"]
+                    }
+                )
+                
+                self.logger.info(
+                    f"{filename}: Pylint score = {pylint_summary['score']:.2f}/10"
+                )
+                
             except Exception as e:
                 self.logger.warning(f"Pylint failed for {filename}: {e}")
                 pylint_summary = PylintSummary(
