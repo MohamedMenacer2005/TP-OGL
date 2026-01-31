@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-01-31T18:55:51.257273",
+  "directories": {
+    "syntax_errors": "test_datasets\\generated\\syntax_errors",
+    "style_issues": "test_datasets\\generated\\style_issues",
+    "logic_errors": "test_datasets\\generated\\logic_errors"
+  },
+  "total_tests": 15,
+  "description": "Jeu de donn\u00e9es standardis\u00e9 pour validation interne du syst\u00e8me multi-agent"
+}

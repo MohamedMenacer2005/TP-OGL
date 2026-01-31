@@ -1,0 +1,36 @@
+{
+  "category": "Syntax Errors",
+  "count": 5,
+  "datasets": [
+    {
+      "id": 1,
+      "name": "Missing colon in function",
+      "file": "error_1.py",
+      "expected_file": "error_1_expected.py"
+    },
+    {
+      "id": 2,
+      "name": "Indentation error in if block",
+      "file": "error_2.py",
+      "expected_file": "error_2_expected.py"
+    },
+    {
+      "id": 3,
+      "name": "Unclosed string literal",
+      "file": "error_3.py",
+      "expected_file": "error_3_expected.py"
+    },
+    {
+      "id": 4,
+      "name": "Missing closing parenthesis",
+      "file": "error_4.py",
+      "expected_file": "error_4_expected.py"
+    },
+    {
+      "id": 5,
+      "name": "Invalid operator in expression",
+      "file": "error_5.py",
+      "expected_file": "error_5_expected.py"
+    }
+  ]
+}

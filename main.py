@@ -22,6 +22,9 @@ import argparse
 import sys
 from pathlib import Path
 
+# Data Officer integration
+from src.data_officer import DataOfficer
+
 
 def parse_arguments():
     """Parse --target_dir as per ENSI specification"""
@@ -74,6 +77,18 @@ def main():
     6. Exit on Judge success or max iterations reached
     """
     try:
+        # ===== DATA OFFICER: PRE-FLIGHT CHECK =====
+        print("\n" + "="*70)
+        print("DATA OFFICER: PRE-FLIGHT VALIDATION")
+        print("="*70)
+        
+        officer = DataOfficer()
+        is_valid, validation_msg = officer.verify_data_integrity()
+        print(validation_msg)
+        
+        if not is_valid:
+            print("\n⚠️  Warning: Data integrity issues detected (may be first run)")
+        
         # ===== ARGUMENT PARSING =====
         args = parse_arguments()
         target_dir = args.target_dir
@@ -149,6 +164,13 @@ def main():
                 print(f"[OK] All tests passing after {iteration} iteration(s)")
                 print(f"[OK] Runtime correctness VALIDATED by JudgeAgent")
                 print(f"  Final status: SUCCESS")
+                
+                # ===== DATA OFFICER: POST-FLIGHT VALIDATION =====
+                print(f"\n[DATA OFFICER] Verifying experiment telemetry...")
+                officer_final = DataOfficer()
+                officer_report = officer_final.generate_report()
+                print(officer_report)
+                
                 sys.exit(0)
             
             # FAILURE: Tests still failing - continue loop or exit

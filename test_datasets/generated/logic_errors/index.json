@@ -1,0 +1,36 @@
+{
+  "category": "Logic Errors",
+  "count": 5,
+  "datasets": [
+    {
+      "id": 1,
+      "name": "Off-by-one error in loop",
+      "file": "bug_1.py",
+      "expected_file": "bug_1_expected.py"
+    },
+    {
+      "id": 2,
+      "name": "Incorrect tax calculation",
+      "file": "bug_2.py",
+      "expected_file": "bug_2_expected.py"
+    },
+    {
+      "id": 3,
+      "name": "Wrong comparison in validation",
+      "file": "bug_3.py",
+      "expected_file": "bug_3_expected.py"
+    },
+    {
+      "id": 4,
+      "name": "Variable name typo causes wrong calculation",
+      "file": "bug_4.py",
+      "expected_file": "bug_4_expected.py"
+    },
+    {
+      "id": 5,
+      "name": "Wrong type in calculation",
+      "file": "bug_5.py",
+      "expected_file": "bug_5_expected.py"
+    }
+  ]
+}
