@@ -73,13 +73,13 @@ def log_experiment(agent_name: str, model_used: str, action: ActionType, details
     data = []
     if os.path.exists(LOG_FILE):
         try:
-            with open(LOG_FILE, 'r', encoding='utf-8') as f:
+            with open(LOG_FILE, 'r', encoding='utf-8-sig') as f:
                 content = f.read().strip()
                 if content: # Vérifie que le fichier n'est pas juste vide
                     data = json.loads(content)
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, UnicodeDecodeError):
             # Si le fichier est corrompu, on repart à zéro (ou on pourrait sauvegarder un backup)
-            print(f"⚠️ Attention : Le fichier de logs {LOG_FILE} était corrompu. Une nouvelle liste a été créée.")
+            print(f"[WARNING] Log file {LOG_FILE} was corrupted. Starting fresh.")
             data = []
 
     data.append(entry)

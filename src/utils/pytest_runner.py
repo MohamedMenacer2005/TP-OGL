@@ -4,6 +4,7 @@ Executes tests on target code and captures results.
 """
 
 import subprocess
+import sys
 import json
 from pathlib import Path
 from typing import Dict, List
@@ -53,9 +54,9 @@ class PytestRunner:
             target_path = self.target_dir
 
         try:
-            # Run pytest with JSON output using python -m pytest for cross-platform compatibility
+            # Run pytest with JSON output using current Python interpreter for proper environment
             result = subprocess.run(
-                ["python", "-m", "pytest", str(target_path), "-v", "--tb=short"],
+                [sys.executable, "-m", "pytest", str(target_path), "-v", "--tb=short"],
                 capture_output=True,
                 text=True,
                 timeout=60
