@@ -46,25 +46,38 @@ class PylintRunner:
             }
 
         try:
-            # Run pylint with JSON output
-            result = subprocess.run(
-                ["pylint", str(file_path), "--output-format=json"],
+            # First run: Get JSON output for detailed messages
+            result_json = subprocess.run(
+                ["python", "-m", "pylint", str(file_path), "--output-format=json"],
                 capture_output=True,
                 text=True,
                 timeout=30
             )
             
             # Parse JSON output
-            if result.stdout:
-                messages = json.loads(result.stdout)
+            if result_json.stdout:
+                try:
+                    messages = json.loads(result_json.stdout)
+                except json.JSONDecodeError:
+                    messages = []
             else:
                 messages = []
             
-            # Extract score from stderr or default to 0
+            # Second run: Get text output to extract score
+            result_text = subprocess.run(
+                ["python", "-m", "pylint", str(file_path)],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            # Extract score from text output
             score = 0.0
-            if "Your code has been rated at" in result.stderr:
+            output = result_text.stdout + result_text.stderr
+            
+            if "Your code has been rated at" in output:
                 # Extract score like "8.5/10"
-                parts = result.stderr.split("Your code has been rated at ")
+                parts = output.split("Your code has been rated at ")
                 if len(parts) > 1:
                     score_str = parts[1].split("/")[0].strip()
                     try:
@@ -76,7 +89,7 @@ class PylintRunner:
                 "success": True,
                 "score": score,
                 "messages": messages,
-                "raw_output": result.stderr
+                "raw_output": output
             }
         
         except subprocess.TimeoutExpired:

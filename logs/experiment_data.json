@@ -1,15 +1,43 @@
 [
     {
-        "id": "a4a64b31-5906-46fc-b52c-194cc5498ecc",
-        "timestamp": "2026-01-30T17:03:46.207455",
+        "id": "88f2ba7d-c387-4737-b749-c8236c352318",
+        "timestamp": "2026-01-31T12:56:44.370195",
         "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze code quality with pylint for buggy_test.py",
+            "output_response": "Pylint score: 4.38/10",
+            "filename": "buggy_test.py",
+            "pylint_score": 4.38
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "01eb359a-3f8b-4506-9834-9033e465445e",
+        "timestamp": "2026-01-31T12:56:48.028161",
+        "agent": "AuditorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze code quality with pylint for test_buggy_test.py",
+            "output_response": "Pylint score: 2.56/10",
+            "filename": "test_buggy_test.py",
+            "pylint_score": 2.56
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "0ca3ad46-fbf5-4025-af21-b560fd52dd79",
+        "timestamp": "2026-01-31T12:56:49.470969",
+        "agent": "AuditorAgent",
+        "model": "models/gemini-2.0-flash",
         "action": "DEBUG",
         "details": {
-            "input_prompt": "Run tests on C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_simple_z4dd_0h0",
-            "output_response": "Test execution: 2 failed, 0 errors",
+            "input_prompt": "Run tests on ./sandbox",
+            "output_response": "Test execution: 5 failed, 0 errors",
             "test_passed": false,
-            "test_failed": 2,
+            "test_failed": 5,
             "test_errors": 0,
             "test_messages": [
                 "============================= test session starts =============================",
@@ -20,13 +48,13 @@
         "status": "SUCCESS"
     },
     {
-        "id": "fa2c3217-07c6-4c03-ae12-900176d2ccd7",
-        "timestamp": "2026-01-30T17:03:46.207455",
+        "id": "36e5af40-aa57-4f5b-9401-c67bc8385eec",
+        "timestamp": "2026-01-31T12:56:49.471986",
         "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Audited 2 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_simple_z4dd_0h0",
+            "input_prompt": "Audited 2 files in ./sandbox",
             "output_response": "Audit complete: 5 total issues found, 0 files with errors",
             "files_audited": 2,
             "total_issues": 5,
@@ -36,141 +64,253 @@
         "status": "SUCCESS"
     },
     {
-        "id": "1ab98d82-b070-4176-88c8-a4a51327bb31",
-        "timestamp": "2026-01-30T17:03:46.237453",
+        "id": "634324c5-f837-447e-a2c5-76444fd1500c",
+        "timestamp": "2026-01-31T12:56:49.908452",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: add(2, 3) == 5\nReturn corrected code.\n```\n\ndef add(a, b):\n    return a - b  # BUG: should be +\n\ndef multiply(a, b):\n    return a + b  # BUG: should be *\n\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: add(2, 3) == 5\nApplied Assertion failed: add(2, 3) == 5 fix [AST]: 6 → 6 lines (0 lines changed)",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: add(2, 3) == 5",
-            "original_length": 111,
-            "corrected_length": 111,
-            "change_ratio": 1.0,
-            "was_changed": true
+            "input_prompt": "Attempted fix: Test test_account_initialization is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "3f0a59d3-571f-40b9-bff0-b6e50246da2a",
-        "timestamp": "2026-01-30T17:03:46.250164",
+        "id": "ef492809-757e-4370-9115-1c344f4826ae",
+        "timestamp": "2026-01-31T12:56:49.994571",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: -1 == 5\nReturn corrected code.\n```\n\ndef add(a, b):\n    return a + b  # BUG: should be +\n\ndef multiply(a, b):\n    return a + b  # BUG: should be *\n\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: -1 == 5\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: -1 == 5",
-            "original_length": 111,
-            "corrected_length": 111,
-            "change_ratio": 1.0,
-            "was_changed": false
+            "input_prompt": "Attempted fix: Test test_account_deposit is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "4070209d-795e-467a-8889-35dcf60efb3a",
-        "timestamp": "2026-01-30T17:03:46.262706",
+        "id": "2d88da14-098a-4ef2-829a-1e649c0fb695",
+        "timestamp": "2026-01-31T12:56:50.116282",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: multiply(2, 3) == 6\nReturn corrected code.\n```\n\ndef add(a, b):\n    return a + b  # BUG: should be +\n\ndef multiply(a, b):\n    return a + b  # BUG: should be *\n\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: multiply(2, 3) == 6\nApplied Assertion failed: multiply(2, 3) == 6 fix [AST]: 6 → 6 lines (0 lines changed)",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: multiply(2, 3) == 6",
-            "original_length": 111,
-            "corrected_length": 111,
-            "change_ratio": 1.0,
-            "was_changed": true
+            "input_prompt": "Attempted fix: Test test_account_withdraw is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "0f1656bb-42c6-4909-937c-a8c4a731c554",
-        "timestamp": "2026-01-30T17:03:46.276295",
+        "id": "b877ce90-2ac9-4fcf-9d7b-48852a5b645e",
+        "timestamp": "2026-01-31T12:56:50.216592",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test test_read_nonexistent_file is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "056d39ff-8553-4f27-aeec-fce6165893df",
+        "timestamp": "2026-01-31T12:56:50.306554",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test test_parse_invalid_json is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "26d26d71-0641-4c77-9d62-dac2f76be8d4",
+        "timestamp": "2026-01-31T12:56:50.321152",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_GEN",
         "details": {
-            "input_prompt": "Generated corrections for 1 files",
-            "output_response": "Created 3 corrections addressing 5 critical issues",
-            "files_corrected": 1,
-            "total_corrections": 3,
+            "input_prompt": "Generated corrections for 0 files",
+            "output_response": "Created 0 corrections addressing 5 critical issues",
+            "files_corrected": 0,
+            "total_corrections": 0,
             "critical_issues_addressed": 5
         },
         "status": "SUCCESS"
     },
     {
-        "id": "f3867b6c-da98-46ce-bac1-ddbbce23e1f3",
-        "timestamp": "2026-01-30T17:03:47.141077",
+        "id": "c55be0e5-8319-4945-a8a8-df7f52c3d4be",
+        "timestamp": "2026-01-31T12:56:54.173271",
+        "agent": "PylintOptimizerAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Optimize buggy_test.py for pylint score (baseline: 4.38)",
+            "output_response": "Optimization complete: 2 optimizations applied, score 4.38 → 4.38 (+0.00)",
+            "filename": "buggy_test.py",
+            "baseline_score": 4.38,
+            "final_score": 4.38,
+            "optimizations_count": 2,
+            "score_improvement": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "c3c5ae16-2c9e-4458-a05d-ff796438603e",
+        "timestamp": "2026-01-31T12:56:59.636861",
+        "agent": "PylintOptimizerAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Optimize test_buggy_test.py for pylint score (baseline: 2.56)",
+            "output_response": "Optimization complete: 1 optimizations applied, score 2.56 → 2.56 (+0.00)",
+            "filename": "test_buggy_test.py",
+            "baseline_score": 2.56,
+            "final_score": 2.56,
+            "optimizations_count": 1,
+            "score_improvement": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "bc29fed8-03dc-44b6-8f07-c7cd66c6762a",
+        "timestamp": "2026-01-31T12:56:59.637859",
+        "agent": "PylintOptimizerAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Optimize all files in ./sandbox for pylint scores",
+            "output_response": "Optimization phase complete: 2 files processed, total score improvement: +0.00",
+            "files_processed": 2,
+            "total_score_improvement": 0.0,
+            "avg_score_improvement": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "05cd3e8c-bc7b-4946-8d4e-327bd6bab097",
+        "timestamp": "2026-01-31T12:57:01.060475",
         "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
         "action": "DEBUG",
         "details": {
-            "input_prompt": "Execute tests on C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_simple_z4dd_0h0",
-            "output_response": "Test execution completed: 2 passed, 0 failed, 0 errors",
-            "target_dir": "C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_simple_z4dd_0h0",
-            "passed": 2,
-            "failed": 0,
+            "input_prompt": "Execute tests on ./sandbox",
+            "output_response": "Test execution completed: 5 passed, 5 failed, 0 errors",
+            "target_dir": "./sandbox",
+            "passed": 5,
+            "failed": 5,
             "errors": 0,
-            "total_issues": 0
+            "total_issues": 5
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "1f20e818-091f-4be1-859f-203bdfec96d4",
-        "timestamp": "2026-01-30T17:03:47.141077",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
+        "id": "abd1507f-800d-4c0a-b1a1-7be4b43b7c85",
+        "timestamp": "2026-01-31T12:57:01.184753",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Judge final validation",
-            "output_response": "✓ All tests passed! Mission complete.",
-            "final_status": "PASSED",
-            "retry_count": 0,
-            "passed": 2,
-            "failed": 0,
-            "errors": 0
+            "input_prompt": "Attempted fix: Test TestBankAccount::test_account_initialization: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "9b58d0a1-3f9f-47af-914d-44add7cfd2d0",
+        "timestamp": "2026-01-31T12:57:01.322376",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test TestBankAccount::test_account_deposit: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "0c0be403-b584-4fbc-8f12-df4fcaed4acf",
+        "timestamp": "2026-01-31T12:57:01.453511",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test TestBankAccount::test_account_withdraw: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "a077d1a4-29e1-4351-bd69-c92c37a57534",
+        "timestamp": "2026-01-31T12:57:01.567694",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test TestFileOperations::test_read_nonexistent_file: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "edb5cce7-8a92-40e5-9555-32bc10b26183",
+        "timestamp": "2026-01-31T12:57:01.667485",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test TestJSONParsing::test_parse_invalid_json: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "f111651d-6cb8-4b05-8347-9aa00929253d",
+        "timestamp": "2026-01-31T12:57:01.673782",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "CODE_GEN",
+        "details": {
+            "input_prompt": "Generated corrections for 0 files",
+            "output_response": "Created 0 corrections addressing 5 critical issues",
+            "files_corrected": 0,
+            "total_corrections": 0,
+            "critical_issues_addressed": 5
         },
         "status": "SUCCESS"
     },
     {
-        "id": "6f8b15d3-416f-4089-9635-2424e84ce83a",
-        "timestamp": "2026-01-30T17:04:38.495099",
+        "id": "96d94938-c012-4e54-9b42-04b85152786e",
+        "timestamp": "2026-01-31T13:35:35.681782",
         "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\n\"\"\"Module with code quality issues.\"\"\"\n\ndef process_data():\n    try:\n        data = [1, 2, 3]\n        print(\"Processing:\", data)  # Issue: print without logging\n        return data\n    except:  # Issue: bare except\n        print(\"Error occurred\")\n        return None\n\nclass DataHandler:\n    def __init__(self):\n        self.data = []\n    \n    def add_item(self, item):\n        self.data.append(item)\n        print(f\"Added: {item}\")  # Issue: print without logging\n\n```",
-            "output_response": "Found 2 potential issues in module.py",
-            "filename": "module.py",
-            "code_length": 465,
-            "line_count": 19,
-            "issues_found": 2,
-            "issues": [
-                "Bare except clause found (bad practice - catches all exceptions)",
-                "Using print() statements without logging module"
-            ],
-            "complex_functions": 0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "7972b5f7-0f4d-4e6b-94c6-3d1ad9027c8c",
-        "timestamp": "2026-01-30T17:04:38.507520",
-        "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\n\"\"\"Tests for the module.\"\"\"\n\ndef test_process_data():\n    \"\"\"Test process_data function.\"\"\"\n    from module import process_data\n    result = process_data()\n    assert result is not None, \"process_data should return data\"\n    assert len(result) == 3, \"process_data should return 3 items\"\n\ndef test_data_handler_creation():\n    \"\"\"Test DataHandler instantiation.\"\"\"\n    from module import DataHandler\n    handler = DataHandler()\n    assert handler.data == [], \"data should be initialized as empty list\"\n\ndef test_data_handler_add_item():\n    \"\"\"Test adding items to DataHandler.\"\"\"\n    from module import DataHandler\n    handler = DataHandler()\n    handler.add_item(42)\n    assert 42 in handler.data, \"item should be added to data\"\n    assert len(handler.data) == 1, \"data should have one item\"\n\n```",
-            "output_response": "Found 0 potential issues in test_module.py",
-            "filename": "test_module.py",
-            "code_length": 794,
-            "line_count": 23,
+            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\"\"\"\nTests for buggy_test.py\nTesting various functions to verify they work correctly\n\"\"\"\n\nimport pytest\nfrom buggy_test import (\n    calculate_total_with_tax,\n    greet_user,\n    process_order,\n    BankAccount,\n    read_file_unsafe,\n    parse_json_unsafe,\n    divide_unsafe\n)\n\n\nclass TestCalculations:\n    \"\"\"Test calculation functions\"\"\"\n    \n    def test_calculate_total_with_tax_basic(self):\n        \"\"\"Test basic tax calculation\"\"\"\n        # This will fail because of undefined tax_rate in the buggy function\n        # But we can test what should happen\n        pass\n    \n    def test_greet_user_basic(self):\n        \"\"\"Test greeting function\"\"\"\n        # This will fail because of 'nam' typo\n        pass\n\n\nclass TestBankAccount:\n    \"\"\"Test BankAccount class\"\"\"\n    \n    def test_account_initialization(self):\n        \"\"\"Test account creation\"\"\"\n        account = BankAccount(\"John\", 1000)\n        assert account.owner == \"John\"\n        assert account.balance == 1000\n    \n    def test_account_deposit(self):\n        \"\"\"Test depositing money\"\"\"\n        account = BankAccount(\"Jane\", 500)\n        account.deposit(250)\n        assert account.balance == 750\n    \n    def test_account_withdraw(self):\n        \"\"\"Test withdrawing money\"\"\"\n        account = BankAccount(\"Bob\", 1000)\n... (46 more lines truncated)\n```",
+            "output_response": "Found 0 potential issues in test_buggy_test.py",
+            "filename": "test_buggy_test.py",
+            "code_length": 2542,
+            "line_count": 96,
             "issues_found": 0,
             "issues": [],
             "complex_functions": 0
@@ -178,134 +318,17 @@
         "status": "SUCCESS"
     },
     {
-        "id": "a73d9d95-41f9-4d7e-920b-37cf1d979397",
-        "timestamp": "2026-01-30T17:04:39.313025",
+        "id": "0d4a2cc0-6277-49f1-9e82-2da83fb4f3ee",
+        "timestamp": "2026-01-31T13:35:35.682786",
         "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Audited 2 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpbsofg7ds",
-            "output_response": "Audit complete: 2 total issues found, 0 files with errors",
-            "files_audited": 2,
-            "total_issues": 2,
-            "files_with_errors": 0,
-            "parallel_processing": true
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "fac64260-674b-4703-a8a8-7e1ee7da43b4",
-        "timestamp": "2026-01-30T17:04:39.313025",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Bare except clause found (bad practice - catches all exceptions)\nReturn corrected code.\n```\n\n\"\"\"Module with code quality issues.\"\"\"\n\ndef process_data():\n    try:\n        data = [1, 2, 3]\n        print(\"Processing:\", data)  # Issue: print without logging\n        return data\n    except:  # Issue: bare except\n        print(\"Error occurred\")\n        return None\n\nclass DataHandler:\n    def __init__(self):\n        self.data = []\n    \n    def add_item(self, item):\n        self.data.append(item)\n        print(f\"Added: {item}\")  # Issue: print without logging\n\n```\nFixed:",
-            "output_response": "Generated correction for: Bare except clause found (bad practice - catches all exceptions)\nApplied Bare except clause found (bad practice - catches all exceptions) fix [AST]: 19 → 19 lines (0 lines changed)",
-            "filename": "module.py",
-            "issue": "Bare except clause found (bad practice - catches all exceptions)",
-            "original_length": 465,
-            "corrected_length": 389,
-            "change_ratio": 0.8365591397849462,
-            "was_changed": true
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "5e6128be-2d15-4509-9171-adc493f504e6",
-        "timestamp": "2026-01-30T17:04:39.338669",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Using print() statements without logging module\nReturn corrected code.\n```\n\"\"\"Module with code quality issues.\"\"\"\n\ndef process_data():\n    try:\n        data = [1, 2, 3]\n        print('Processing:', data)\n        return data\n    except Exception as e:\n        print('Error occurred')\n        return None\n\nclass DataHandler:\n\n    def __init__(self):\n        self.data = []\n\n    def add_item(self, item):\n        self.data.append(item)\n        print(f'Added: {item}')\n```\nFixed:",
-            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 19 → 20 lines (1 lines changed)",
-            "filename": "module.py",
-            "issue": "Using print() statements without logging module",
-            "original_length": 389,
-            "corrected_length": 424,
-            "change_ratio": 1.0899742930591259,
-            "was_changed": true
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "3ac9a5d6-9307-46fd-a06b-4eb93e4fccc2",
-        "timestamp": "2026-01-30T17:04:39.361091",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Generated corrections for 1 files",
-            "output_response": "Created 2 corrections addressing 2 critical issues",
-            "files_corrected": 1,
-            "total_corrections": 2,
-            "critical_issues_addressed": 2
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "4d763cbe-420a-42ff-b867-2de66e5e666e",
-        "timestamp": "2026-01-30T17:04:40.162334",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Execute tests on C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpbsofg7ds",
-            "output_response": "Test execution completed: 3 passed, 0 failed, 0 errors",
-            "target_dir": "C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\tmpbsofg7ds",
-            "passed": 3,
-            "failed": 0,
-            "errors": 0,
-            "total_issues": 0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "4ce283d9-be98-4770-84ae-5cadc7b514dd",
-        "timestamp": "2026-01-30T17:04:40.162334",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Judge final validation",
-            "output_response": "✓ All tests passed! Mission complete.",
-            "final_status": "PASSED",
-            "retry_count": 0,
-            "passed": 3,
-            "failed": 0,
-            "errors": 0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "7771b9e6-8415-419b-bd76-599ed17e3cb8",
-        "timestamp": "2026-01-30T17:04:40.895200",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Validate mission completion",
-            "output_response": "Mission status: COMPLETE",
-            "mission_complete": true,
-            "all_tests_passed": true,
-            "failed_count": 0,
-            "error_count": 0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "48c6d15e-ba99-40ee-9413-fc9a7049846d",
-        "timestamp": "2026-01-30T17:04:47.298986",
-        "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\nimport pytest\nfrom calculator import add, multiply, divide\n\ndef test_add():\n    '''Test addition'''\n    assert add(2, 3) == 5, \"add(2, 3) should be 5\"\n    assert add(-1, 1) == 0, \"add(-1, 1) should be 0\"\n    assert add(0, 0) == 0, \"add(0, 0) should be 0\"\n\ndef test_multiply():\n    '''Test multiplication'''\n    assert multiply(2, 3) == 6, \"multiply(2, 3) should be 6\"\n    assert multiply(-2, 3) == -6, \"multiply(-2, 3) should be -6\"\n    assert multiply(5, 0) == 0, \"multiply(5, 0) should be 0\"\n\ndef test_divide():\n    '''Test division'''\n    assert divide(10, 2) == 5, \"divide(10, 2) should be 5\"\n    assert divide(9, 3) == 3, \"divide(9, 3) should be 3\"\n    \n    with pytest.raises(ValueError):\n        divide(10, 0)\n\nif __name__ == \"__main__\":\n    pytest.main([__file__, \"-v\"])\n\n```",
-            "output_response": "Found 0 potential issues in test_calculator.py",
-            "filename": "test_calculator.py",
-            "code_length": 780,
-            "line_count": 26,
+            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\"\"\"\nBuggy Python Code for Testing Refactoring Agents\nContains intentional bugs for testing purposes\n\"\"\"\n\n\ndef calculate_total_with_tax(price):\n    \"\"\"Calculate total price with tax (BUGGY: undefined tax_rate)\"\"\"\n    return price + (price * tax_rate)  # BUG: tax_rate not defined\n\n\ndef greet_user(name):\n    \"\"\"Greet a user (BUGGY: typo in variable name)\"\"\"\n    return f\"Hello, {nam}!\"  # BUG: should be 'name' not 'nam'\n\n\ndef process_order(items):\n    \"\"\"Process an order (BUGGY: doesn't return anything)\"\"\"\n    total = 0\n    for item in items:\n        total += item['price']\n    # BUG: missing return statement\n\n\nclass BankAccount:\n    \"\"\"Bank account class (BUGGY: __init__ signature mismatch)\"\"\"\n    \n    def __init__(self, owner):  # BUG: tests expect (owner, balance) but this only takes owner\n        self.owner = owner\n        self.balance = 0\n    \n    def deposit(self, amount):\n        \"\"\"Deposit money\"\"\"\n        if amount > 0:\n            self.balance += amount\n            return True\n        return False\n    \n    def withdraw(self, amount):\n        \"\"\"Withdraw money\"\"\"\n        if amount > 0 and amount <= self.balance:\n            self.balance -= amount\n            return True\n        return False\n    \n    def get_balance(self):\n        \"\"\"Get current balance\"\"\"\n        return self.balance\n\n\n... (15 more lines truncated)\n```",
+            "output_response": "Found 0 potential issues in buggy_test.py",
+            "filename": "buggy_test.py",
+            "code_length": 1732,
+            "line_count": 65,
             "issues_found": 0,
             "issues": [],
             "complex_functions": 0
@@ -313,16 +336,44 @@
         "status": "SUCCESS"
     },
     {
-        "id": "1fc3f851-4c34-4038-aed9-690c77f73680",
-        "timestamp": "2026-01-30T17:04:48.173690",
+        "id": "b22505d1-5121-49fb-bec9-33291eee102b",
+        "timestamp": "2026-01-31T13:35:39.126636",
         "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze code quality with pylint for buggy_test.py",
+            "output_response": "Pylint score: 4.38/10",
+            "filename": "buggy_test.py",
+            "pylint_score": 4.38
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "dbd83ff1-787b-44ef-bd36-a8efb590ddc3",
+        "timestamp": "2026-01-31T13:35:43.170344",
+        "agent": "AuditorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze code quality with pylint for test_buggy_test.py",
+            "output_response": "Pylint score: 2.56/10",
+            "filename": "test_buggy_test.py",
+            "pylint_score": 2.56
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "db9902d7-4c83-4bfe-9253-3ae6f18180e2",
+        "timestamp": "2026-01-31T13:35:46.305328",
+        "agent": "AuditorAgent",
+        "model": "models/gemini-2.0-flash",
         "action": "DEBUG",
         "details": {
-            "input_prompt": "Run tests on C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_test_2_9h25hc",
-            "output_response": "Test execution: 3 failed, 0 errors",
+            "input_prompt": "Run tests on ./sandbox",
+            "output_response": "Test execution: 5 failed, 0 errors",
             "test_passed": false,
-            "test_failed": 3,
+            "test_failed": 5,
             "test_errors": 0,
             "test_messages": [
                 "============================= test session starts =============================",
@@ -333,13 +384,13 @@
         "status": "SUCCESS"
     },
     {
-        "id": "4d4b6d03-058c-4151-9489-ef3db8542b49",
-        "timestamp": "2026-01-30T17:04:48.173690",
+        "id": "88172543-f6ab-4a60-a335-034fbf63f7b3",
+        "timestamp": "2026-01-31T13:35:46.307729",
         "agent": "AuditorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Audited 2 files in C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_test_2_9h25hc",
+            "input_prompt": "Audited 2 files in ./sandbox",
             "output_response": "Audit complete: 5 total issues found, 0 files with errors",
             "files_audited": 2,
             "total_issues": 5,
@@ -349,364 +400,239 @@
         "status": "SUCCESS"
     },
     {
-        "id": "f862f503-c381-4036-a908-9f28b810bd6c",
-        "timestamp": "2026-01-30T17:04:48.194195",
+        "id": "782a8b46-e44c-4484-be2f-fc712eddc447",
+        "timestamp": "2026-01-31T13:35:46.733343",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Using print() statements without logging module\nReturn corrected code.\n```\n\ndef add(a, b):\n    '''Add two numbers - BUGGY VERSION'''\n    return a - b  # BUG: should be a + b\n\ndef multiply(a, b):\n    '''Multiply two numbers - BUGGY VERSION'''\n    return a + b  # BUG: should be a * b\n\ndef divide(a, b):\n    '''Divide two numbers - BUGGY VERSION'''\n    if b == 0:\n        return \"Error\"  # BUG: should raise ValueError\n    return a / b\n\nif __name__ == \"__main__\":\n    print(f\"5 + 3 = {add(5, 3)}\")\n    print(f\"5 * 3 = {multiply(5, 3)}\")\n    print(f\"10 / 2 = {divide(10, 2)}\")\n\n```\nFixed:",
-            "output_response": "Generated correction for: Using print() statements without logging module\nApplied Using print() statements without logging module fix [AST]: 19 → 19 lines (0 lines changed)",
-            "filename": "calculator.py",
-            "issue": "Using print() statements without logging module",
-            "original_length": 499,
-            "corrected_length": 456,
-            "change_ratio": 0.9138276553106213,
-            "was_changed": true
+            "input_prompt": "Attempted fix: Test test_account_initialization is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "d03ec6ac-121e-4316-8293-a30b7e501e17",
-        "timestamp": "2026-01-30T17:04:48.218997",
+        "id": "8f7e6854-ded0-4e80-bf58-1a32ce6c83ad",
+        "timestamp": "2026-01-31T13:35:46.823440",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a - b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nApplied Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\" fix [AST]: 19 → 19 lines (0 lines changed)",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": true
+            "input_prompt": "Attempted fix: Test test_account_deposit is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "6715df84-6a7a-4856-a04b-5db3774f7511",
-        "timestamp": "2026-01-30T17:04:48.232502",
+        "id": "8f3e7216-1235-4910-91eb-9057d9eb0d7c",
+        "timestamp": "2026-01-31T13:35:46.943448",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: -1 == 5\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: -1 == 5\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: -1 == 5",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
+            "input_prompt": "Attempted fix: Test test_account_withdraw is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "fe5c92fa-70ca-4fbe-9bf3-9bbdbd9aa715",
-        "timestamp": "2026-01-30T17:04:48.246296",
+        "id": "9e2d6c7b-eead-4614-a677-00304bef57bd",
+        "timestamp": "2026-01-31T13:35:47.040069",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test test_read_nonexistent_file is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "9a9b9a8a-3ee2-4d29-9cba-19dbf1129a15",
+        "timestamp": "2026-01-31T13:35:47.139853",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test test_parse_invalid_json is failing - check logic",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "cec4f233-4f01-4425-8ba2-9e4692a9ea17",
+        "timestamp": "2026-01-31T13:35:47.154139",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_GEN",
         "details": {
-            "input_prompt": "Generated corrections for 1 files",
-            "output_response": "Created 3 corrections addressing 5 critical issues",
-            "files_corrected": 1,
-            "total_corrections": 3,
+            "input_prompt": "Generated corrections for 0 files",
+            "output_response": "Created 0 corrections addressing 5 critical issues",
+            "files_corrected": 0,
+            "total_corrections": 0,
             "critical_issues_addressed": 5
         },
         "status": "SUCCESS"
     },
     {
-        "id": "6d10b1f4-efc0-4c0b-ae79-ae70e7cf9838",
-        "timestamp": "2026-01-30T17:04:49.122712",
+        "id": "dc6729cd-a611-4395-8556-97464974ac27",
+        "timestamp": "2026-01-31T13:35:50.982592",
+        "agent": "PylintOptimizerAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Optimize buggy_test.py for pylint score (baseline: 4.38)",
+            "output_response": "Optimization complete: 2 optimizations applied, score 4.38 → 4.38 (+0.00)",
+            "filename": "buggy_test.py",
+            "baseline_score": 4.38,
+            "final_score": 4.38,
+            "optimizations_count": 2,
+            "score_improvement": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "37ccd89d-02e0-4893-bcb4-79bb1e1ea133",
+        "timestamp": "2026-01-31T13:35:56.347988",
+        "agent": "PylintOptimizerAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Optimize test_buggy_test.py for pylint score (baseline: 2.56)",
+            "output_response": "Optimization complete: 1 optimizations applied, score 2.56 → 2.56 (+0.00)",
+            "filename": "test_buggy_test.py",
+            "baseline_score": 2.56,
+            "final_score": 2.56,
+            "optimizations_count": 1,
+            "score_improvement": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "1c4a21c8-bd25-4238-beaf-9327e3b84a0f",
+        "timestamp": "2026-01-31T13:35:56.347988",
+        "agent": "PylintOptimizerAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Optimize all files in ./sandbox for pylint scores",
+            "output_response": "Optimization phase complete: 2 files processed, total score improvement: +0.00",
+            "files_processed": 2,
+            "total_score_improvement": 0.0,
+            "avg_score_improvement": 0.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "d894466a-1bfc-48c0-9b63-6ef6a9ba56fb",
+        "timestamp": "2026-01-31T13:35:57.736769",
         "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
         "action": "DEBUG",
         "details": {
-            "input_prompt": "Execute tests on C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_test_2_9h25hc",
-            "output_response": "Test execution completed: 1 passed, 2 failed, 0 errors",
-            "target_dir": "C:\\Users\\ALQUDS\\AppData\\Local\\Temp\\e2e_test_2_9h25hc",
-            "passed": 1,
-            "failed": 2,
+            "input_prompt": "Execute tests on ./sandbox",
+            "output_response": "Test execution completed: 5 passed, 5 failed, 0 errors",
+            "target_dir": "./sandbox",
+            "passed": 5,
+            "failed": 5,
             "errors": 0,
-            "total_issues": 2
+            "total_issues": 5
         },
         "status": "FAILURE"
     },
     {
-        "id": "a39436b3-d2c0-42f1-add7-4914fee727c0",
-        "timestamp": "2026-01-30T17:04:49.122712",
+        "id": "ef3c24fb-65f4-423a-bc9d-c32382a30e33",
+        "timestamp": "2026-01-31T13:35:57.841530",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Using print() statements without logging module\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Using print() statements without logging module\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Using print() statements without logging module",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
+            "input_prompt": "Attempted fix: Test TestBankAccount::test_account_initialization: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "42780012-327b-4c39-b517-8775ec85b76a",
-        "timestamp": "2026-01-30T17:04:49.139994",
+        "id": "34000242-11e1-463d-a81d-5e7093263a7c",
+        "timestamp": "2026-01-31T13:35:57.951977",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
+            "input_prompt": "Attempted fix: Test TestBankAccount::test_account_deposit: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "1a038f04-333c-4ae2-88a9-b5bc4259065c",
-        "timestamp": "2026-01-30T17:04:49.161147",
+        "id": "33e6d0f2-2b93-45af-b627-0fb3c72e1738",
+        "timestamp": "2026-01-31T13:35:58.047514",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
         "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: -1 == 5\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: -1 == 5\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: -1 == 5",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
+            "input_prompt": "Attempted fix: Test TestBankAccount::test_account_withdraw: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
         },
-        "status": "SUCCESS"
+        "status": "FAILURE"
     },
     {
-        "id": "656f69f9-fbeb-4ae0-bb60-eac29faa2af9",
-        "timestamp": "2026-01-30T17:04:49.176531",
+        "id": "3bf058fb-daac-4bf8-8d2f-df11dc0bbfdc",
+        "timestamp": "2026-01-31T13:35:58.136566",
         "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test TestFileOperations::test_read_nonexistent_file: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "1a410c14-5036-4563-9749-89cc4921f391",
+        "timestamp": "2026-01-31T13:35:58.231810",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
+        "action": "FIX",
+        "details": {
+            "input_prompt": "Attempted fix: Test TestJSONParsing::test_parse_invalid_json: Assertion failed (see test output for details)",
+            "output_response": "LLM fix failed: Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",
+            "filename": "buggy_test.py",
+            "error": "Failed to generate correction: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
+        },
+        "status": "FAILURE"
+    },
+    {
+        "id": "0e3344c9-cab2-4bf9-92ff-f2223b3cca3d",
+        "timestamp": "2026-01-31T13:35:58.231810",
+        "agent": "CorrectorAgent",
+        "model": "models/gemini-2.0-flash",
         "action": "CODE_GEN",
         "details": {
-            "input_prompt": "Generated corrections for 1 files",
-            "output_response": "Created 3 corrections addressing 5 critical issues",
-            "files_corrected": 1,
-            "total_corrections": 3,
+            "input_prompt": "Generated corrections for 0 files",
+            "output_response": "Created 0 corrections addressing 5 critical issues",
+            "files_corrected": 0,
+            "total_corrections": 0,
             "critical_issues_addressed": 5
         },
         "status": "SUCCESS"
-    },
-    {
-        "id": "15039af9-fc53-492e-a479-e53919ab61c7",
-        "timestamp": "2026-01-30T17:04:50.005915",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Re-test after correction (attempt 1)",
-            "output_response": "Test execution: 1 passed, 2 failed, 0 errors",
-            "retry_attempt": 1,
-            "passed": 1,
-            "failed": 2,
-            "errors": 0,
-            "total_issues": 2
-        },
-        "status": "FAILURE"
-    },
-    {
-        "id": "ffe6e5cd-374b-4ccf-825b-743f6ff80ac7",
-        "timestamp": "2026-01-30T17:04:50.021797",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Using print() statements without logging module\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Using print() statements without logging module\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Using print() statements without logging module",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "a7f92134-18a0-49c7-a76c-f3d098dd3ce9",
-        "timestamp": "2026-01-30T17:04:50.039771",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "492f363f-a83f-48b6-a606-1602ec8e0fe8",
-        "timestamp": "2026-01-30T17:04:50.050132",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: -1 == 5\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: -1 == 5\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: -1 == 5",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "d75def3a-a7ad-4f21-b07b-8702a7d9db8d",
-        "timestamp": "2026-01-30T17:04:50.066439",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Generated corrections for 1 files",
-            "output_response": "Created 3 corrections addressing 5 critical issues",
-            "files_corrected": 1,
-            "total_corrections": 3,
-            "critical_issues_addressed": 5
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "aee9b5c7-cdf2-40bf-b2ff-672efa498122",
-        "timestamp": "2026-01-30T17:04:50.887599",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Re-test after correction (attempt 2)",
-            "output_response": "Test execution: 1 passed, 2 failed, 0 errors",
-            "retry_attempt": 2,
-            "passed": 1,
-            "failed": 2,
-            "errors": 0,
-            "total_issues": 2
-        },
-        "status": "FAILURE"
-    },
-    {
-        "id": "9b0a7003-13a2-4919-af67-26434d5ca4a4",
-        "timestamp": "2026-01-30T17:04:50.887599",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Using print() statements without logging module\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Using print() statements without logging module\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Using print() statements without logging module",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "cf696614-7407-46a8-8c99-2875c0f92733",
-        "timestamp": "2026-01-30T17:04:50.904132",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: add(2, 3) == 5, \"add(2, 3) should be 5\"",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "c11db2ab-1b8c-4bc2-9edd-eba1f939ade6",
-        "timestamp": "2026-01-30T17:04:50.926377",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Fix ONLY: Assertion failed: -1 == 5\nReturn corrected code.\n```\nimport logging\n\ndef add(a, b):\n    \"\"\"Add two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef multiply(a, b):\n    \"\"\"Multiply two numbers - BUGGY VERSION\"\"\"\n    return a + b\n\ndef divide(a, b):\n    \"\"\"Divide two numbers - BUGGY VERSION\"\"\"\n    if b == 0:\n        return 'Error'\n    return a / b\nif __name__ == '__main__':\n    logging.debug(f'5 + 3 = {add(5, 3)}')\n    logging.debug(f'5 * 3 = {multiply(5, 3)}')\n    logging.debug(f'10 / 2 = {divide(10, 2)}')\n```\nFixed:",
-            "output_response": "Generated correction for: Assertion failed: -1 == 5\nNo changes applied - issue may require manual fix [AST]",
-            "filename": "calculator.py",
-            "issue": "Assertion failed: -1 == 5",
-            "original_length": 456,
-            "corrected_length": 456,
-            "change_ratio": 1.0,
-            "was_changed": false
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "cefa23f6-f4d8-478c-a8e7-5eb89f7a7eab",
-        "timestamp": "2026-01-30T17:04:50.940998",
-        "agent": "CorrectorAgent",
-        "model": "gemini-1.5-flash",
-        "action": "CODE_GEN",
-        "details": {
-            "input_prompt": "Generated corrections for 1 files",
-            "output_response": "Created 3 corrections addressing 5 critical issues",
-            "files_corrected": 1,
-            "total_corrections": 3,
-            "critical_issues_addressed": 5
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "fd8e553a-dab4-4368-80f4-e31d663acf8c",
-        "timestamp": "2026-01-30T17:04:51.770192",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Re-test after correction (attempt 3)",
-            "output_response": "Test execution: 1 passed, 2 failed, 0 errors",
-            "retry_attempt": 3,
-            "passed": 1,
-            "failed": 2,
-            "errors": 0,
-            "total_issues": 2
-        },
-        "status": "FAILURE"
-    },
-    {
-        "id": "5ed4d37d-1ce2-44c9-aa3b-f0cbfc0eb52c",
-        "timestamp": "2026-01-30T17:04:51.770192",
-        "agent": "JudgeAgent",
-        "model": "gemini-1.5-flash",
-        "action": "DEBUG",
-        "details": {
-            "input_prompt": "Judge final validation",
-            "output_response": "✗ Max retries (3) exceeded. Code still has failures.",
-            "final_status": "MAX_RETRIES_EXCEEDED",
-            "retry_count": 3,
-            "passed": 1,
-            "failed": 2,
-            "errors": 0
-        },
-        "status": "FAILURE"
     }
 ]
