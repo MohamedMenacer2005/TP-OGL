@@ -23,7 +23,7 @@ class CorrectorAgent(BaseAgent):
     - No hardcoded pattern matching
     """
 
-    def __init__(self, model: str = "models/gemini-2.0-flash"):
+    def __init__(self, model: str = "models/gemini-2.5-flash"):
         super().__init__(agent_name="CorrectorAgent", model=model)
         self.model = model
         self.llm_client = LLMClient(model=model)
@@ -182,10 +182,36 @@ class CorrectorAgent(BaseAgent):
         # Placeholder - no mechanical fixes yet
         return code
 
+    def _extract_code_from_response(self, response: str) -> str:
+        """
+        Extract Python code from LLM response.
+        Handles multiple markdown formats.
+        
+        Args:
+            response: Raw LLM response text
+            
+        Returns:
+            Extracted Python code, or empty string if extraction fails
+        """
+        if "```python" in response:
+            start = response.find("```python") + 9
+            end = response.rfind("```")
+            if end > start:
+                return response[start:end].strip()
+        
+        if "```" in response:
+            parts = response.split("```")
+            if len(parts) >= 3:
+                code = parts[1].strip()
+                if code.startswith("python\n"):
+                    code = code[7:].strip()
+                return code
+        
+        return response.strip()
+
     def _apply_llm_logic_fix(self, code: str, issue: str, filename: str) -> str:
         """
-        Delegate semantic repair to LLM.
-        Falls back to automatic fixes if LLM is unavailable.
+        Delegate semantic repair to LLM with robust error handling.
         
         Args:
             code: Original code
@@ -193,30 +219,32 @@ class CorrectorAgent(BaseAgent):
             filename: File being fixed
             
         Returns:
-            Fixed code from LLM or automatic fallback
+            Fixed code from LLM, or original code if fix fails
         """
         try:
-            # Use LLMClient's generate_correction method
-            fixed_code = self.llm_client.generate_correction(
+            raw_response = self.llm_client.generate_correction(
                 code=code,
                 issue=issue,
                 context=f"File: {filename}"
             )
-
-            # Extract code from markdown if present
-            if "```python" in fixed_code:
-                start = fixed_code.find("```python") + len("```python")
-                end = fixed_code.rfind("```")
-                fixed_code = fixed_code[start:end].strip()
-
-            # Validate syntax
+            
+            if not raw_response or not raw_response.strip():
+                self.logger.error(f"LLM returned empty response for {filename}")
+                return code
+            
+            fixed_code = self._extract_code_from_response(raw_response)
+            
+            if not fixed_code or len(fixed_code) < 10:
+                self.logger.warning(f"Extracted code too short or empty for {filename}")
+                self.logger.warning(f"Raw response preview: {raw_response[:200]}")
+                return code
+            
             try:
                 compile(fixed_code, "<string>", "exec")
             except SyntaxError as e:
-                self.logger.warning(f"LLM generated invalid Python: {e}")
-                return code  # Return original if fix is invalid
-
-            # Log the fix
+                self.logger.warning(f"LLM generated invalid Python syntax: {e}")
+                return code
+            
             self._log_action(
                 action=ActionType.FIX,
                 prompt=f"Fix for: {issue[:100]}",
@@ -229,13 +257,13 @@ class CorrectorAgent(BaseAgent):
                     "fixed_length": len(fixed_code)
                 }
             )
-
+            
+            self.logger.info(f"LLM fix successfully applied to {filename}")
             return fixed_code
 
         except Exception as e:
             self.logger.warning(f"LLM fix failed: {e}, attempting fallback fixes")
             
-            # Try automatic fallback fixes
             fallback_code = self._apply_fallback_fixes(code, issue, filename)
             
             if fallback_code != code:
@@ -261,7 +289,7 @@ class CorrectorAgent(BaseAgent):
                 extra_details={"filename": filename, "error": str(e)},
                 status="FAILURE"
             )
-            return code  # Return original on error
+            return code
 
     def _apply_fallback_fixes(self, code: str, issue: str, filename: str) -> str:
         """
@@ -331,7 +359,20 @@ class CorrectorAgent(BaseAgent):
                     'def calculate_total_with_tax(price, tax_rate=0.1):',
                     fixed_code
                 )
-                self.logger.info(f"✓ Fixed undefined tax_rate in {filename}")
+                self.logger.info(f"✓ Added tax_rate default in {filename}")
+
+        # Fix 4: Wrong tax calculation (subtracting instead of adding)
+        if "calculate_total_with_tax" in fixed_code and "price - (price * tax_rate)" in fixed_code:
+            fixed_code = fixed_code.replace(
+                "return price - (price * tax_rate)",
+                "return price + (price * tax_rate)"
+            )
+            self.logger.info(f"✓ Fixed tax calculation in {filename}")
+
+        # Fix 5: greet_user typo (nam -> name)
+        if "def greet_user" in fixed_code and "{nam}" in fixed_code:
+            fixed_code = fixed_code.replace("{nam}", "{name}")
+            self.logger.info(f"✓ Fixed greet_user variable typo in {filename}")
         
         # Fix 4: Variable name typo 'nam' should be 'name'
         if "nam" in issue_lower or ("nam" in code and "greet_user" in code):

@@ -21,7 +21,7 @@ class JudgeAgent(BaseAgent):
     def __init__(
         self,
         agent_name: str = "JudgeAgent",
-        model: str = "models/gemini-2.0-flash"
+        model: str = "models/gemini-2.5-flash"
     ):
         """
         Initialize Judge Agent.
