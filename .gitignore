@@ -1,15 +1,19 @@
-# .gitignore
-__pycache__/
-*.pyc
-# .gitignore
-__pycache__/
-*.pyc
+# Environnements virtuels
 venv/
-.env
-.DS_Store
+.venv/
+env/
 
-# Dossier de travail temporaire (ne pas récupérer les modifications des étudiants ici)
-#sandbox/
+# Dossiers de test / travail temporaire
+sandbox/
+sandbox_backup/
+
+# Fichiers sensibles
+.env
+
+# Fichiers système et Python
+.DS_Store
+__pycache__/
+*.pyc
 
 # LOGS : On ignore tout le dossier logs...
 logs/*
