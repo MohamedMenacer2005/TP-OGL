@@ -1,4 +1,25 @@
-# .gitignore
+# Virtual environments
+venv/
+env/
+
+# Environment variables (keep API keys secret)
+.env
+
+# Sandbox and temporary test folders
+sandbox/
+
+# Python bytecode
+__pycache__/
+
+# Logs: ignore logs directory but keep the experiment data file tracked
+logs/
+!logs/experiment_data.json
+
+# Editor/IDE files
+.vscode/
+
+# Misc
+.python-version# .gitignore
 __pycache__/
 *.pyc
 # .gitignore

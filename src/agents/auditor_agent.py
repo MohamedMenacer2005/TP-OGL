@@ -275,7 +275,7 @@ class AuditorAgent(BaseAgent):
     
     def __init__(self, 
                  agent_name: str = "AuditorAgent", 
-                 model: str = "models/gemini-2.0-flash",
+                 model: str = "models/gemini-2.5-flash",
                  max_workers: int = AuditorConfig.MAX_WORKERS):
         """
         Initialize auditor.
