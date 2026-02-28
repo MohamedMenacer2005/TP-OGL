@@ -15,7 +15,7 @@ class BaseAgent(ABC):
     Handles logging automatically; child agents focus on analysis/generation logic.
     """
 
-    def __init__(self, agent_name: str, model: str = "models/gemini-2.5-flash"):
+    def __init__(self, agent_name: str, model: str = "llama-3.3-70b-versatile"):
         """
         Initialize agent.
         

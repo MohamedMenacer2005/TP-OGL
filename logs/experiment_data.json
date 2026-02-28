@@ -1,30 +1,16 @@
 [
     {
-        "id": "9e233e6e-da9f-4d74-95d6-eb9eb0f87b62",
-        "timestamp": "2026-01-31T19:07:46.796951",
+        "id": "4fea2cca-b2f8-48d2-8876-ef7f7c6b0e24",
+        "timestamp": "2026-02-28T17:14:19.278949",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for test_case_1.py",
-            "output_response": "Pylint score: 0.00/10",
-            "filename": "test_case_1.py",
-            "pylint_score": 0.0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "db22c5bb-44a9-424a-a710-38475fcae980",
-        "timestamp": "2026-01-31T19:07:46.800970",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\"\"\"\nInternal test dataset - Case 3: Division by zero\nValidates fix validation through Judge\n\"\"\"\n\ndef divide_numbers(a, b):\n    \"\"\"Divide without zero check\"\"\"\n    return a / b  # BUG: division by zero not handled\n\n```",
-            "output_response": "Found 0 potential issues in test_case_3.py",
-            "filename": "test_case_3.py",
-            "code_length": 213,
-            "line_count": 8,
+            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\"\"\"Unit tests for calculator.py — these pass only when bugs are fixed.\"\"\"\n\nimport pytest\nfrom calculator import add, subtract, multiply, divide\n\n\ndef test_add_returns_correct_value():\n    assert add(3, 4) == 7\n\n\ndef test_add_with_negatives():\n    assert add(-2, 5) == 3\n\n\ndef test_subtract_returns_correct_value():\n    assert subtract(10, 4) == 6\n\n\ndef test_subtract_negative_result():\n    assert subtract(3, 8) == -5\n\n\ndef test_multiply_returns_correct_value():\n    assert multiply(3, 4) == 12\n\n\ndef test_multiply_by_zero():\n    assert multiply(5, 0) == 0\n\n\ndef test_divide_returns_correct_value():\n    assert divide(10, 2) == 5.0\n\n\ndef test_divide_by_zero_raises():\n    with pytest.raises((ValueError, ZeroDivisionError)):\n        divide(5, 0)\n\n```",
+            "output_response": "Found 0 potential issues in test_calculator.py",
+            "filename": "test_calculator.py",
+            "code_length": 746,
+            "line_count": 37,
             "issues_found": 0,
             "issues": [],
             "complex_functions": 0
@@ -32,135 +18,89 @@
         "status": "SUCCESS"
     },
     {
-        "id": "132ae6f6-3a69-49c8-a3ea-6ce5c2980617",
-        "timestamp": "2026-01-31T19:07:46.977248",
+        "id": "89d635ea-b55b-4865-a666-6ab2ad23e090",
+        "timestamp": "2026-02-28T17:14:21.024532",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for test_case_2.py",
-            "output_response": "Pylint score: 6.67/10",
-            "filename": "test_case_2.py",
-            "pylint_score": 6.67
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "b75410aa-f326-4120-ab06-b4515937c422",
-        "timestamp": "2026-01-31T19:07:46.988325",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\ndef add(a, b):\n    return a + b\n\n```",
-            "output_response": "Found 0 potential issues in test_project\\exemple.py",
-            "filename": "test_project\\exemple.py",
-            "code_length": 32,
-            "line_count": 2,
-            "issues_found": 0,
-            "issues": [],
-            "complex_functions": 0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "76fe3787-e2f6-4830-be8f-f890e162d1c3",
-        "timestamp": "2026-01-31T19:07:47.671098",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Analyze code quality with pylint for buggy_test.py",
-            "output_response": "Pylint score: 6.83/10",
-            "filename": "buggy_test.py",
-            "pylint_score": 6.83
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "12099fe6-a14c-4677-9c24-54637a81dd76",
-        "timestamp": "2026-01-31T19:07:48.954949",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Analyze code quality with pylint for test_case_3.py",
+            "input_prompt": "Analyze code quality with pylint for conftest.py",
             "output_response": "Pylint score: 10.00/10",
-            "filename": "test_case_3.py",
+            "filename": "conftest.py",
             "pylint_score": 10.0
         },
         "status": "SUCCESS"
     },
     {
-        "id": "6bee8b48-26c8-4266-b3ad-df1fb8789043",
-        "timestamp": "2026-01-31T19:07:49.082883",
+        "id": "6555df92-10ed-4530-85f5-edf769c1530b",
+        "timestamp": "2026-02-28T17:14:21.048209",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for test_project\\exemple.py",
-            "output_response": "Pylint score: 0.00/10",
-            "filename": "test_project\\exemple.py",
-            "pylint_score": 0.0
+            "input_prompt": "Analyze code quality with pylint for calculator.py",
+            "output_response": "Pylint score: 6.07/10",
+            "filename": "calculator.py",
+            "pylint_score": 6.07
         },
         "status": "SUCCESS"
     },
     {
-        "id": "f914cb7b-3650-4122-8665-544a0c14f8e6",
-        "timestamp": "2026-01-31T19:07:51.505549",
+        "id": "527ca14f-bcb4-4a62-a43a-c6572d459422",
+        "timestamp": "2026-02-28T17:14:23.820834",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for test_buggy_test.py",
-            "output_response": "Pylint score: 6.67/10",
-            "filename": "test_buggy_test.py",
-            "pylint_score": 6.67
+            "input_prompt": "Analyze code quality with pylint for test_calculator.py",
+            "output_response": "Pylint score: 5.79/10",
+            "filename": "test_calculator.py",
+            "pylint_score": 5.79
         },
         "status": "SUCCESS"
     },
     {
-        "id": "ad5e5be8-8ac4-41f1-af64-961831a36345",
-        "timestamp": "2026-01-31T19:07:52.851624",
+        "id": "81f74ccc-4dca-487d-9ded-0c0f6331c10f",
+        "timestamp": "2026-02-28T17:14:24.299469",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Audited 6 files in sandbox",
-            "output_response": "Audit complete: 1 total issues found, 0 files with errors",
-            "files_audited": 6,
-            "total_issues": 1,
+            "input_prompt": "Audited 3 files in sandbox/test_local",
+            "output_response": "Audit complete: 0 total issues found, 0 files with errors",
+            "files_audited": 3,
+            "total_issues": 0,
             "files_with_errors": 0,
             "parallel_processing": true
         },
         "status": "SUCCESS"
     },
     {
-        "id": "9a5e5bff-6a46-4b86-9e74-f18b5c26efde",
-        "timestamp": "2026-01-31T19:07:58.158685",
+        "id": "5491c596-bd66-47ab-bb1e-1a1ff6b435cb",
+        "timestamp": "2026-02-28T17:14:24.307025",
         "agent_name": "CorrectorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_GEN",
         "details": {
             "input_prompt": "Generated corrections for 0 files",
-            "output_response": "Created 0 corrections addressing 1 critical issues",
+            "output_response": "Created 0 corrections addressing 0 critical issues",
             "files_corrected": 0,
             "total_corrections": 0,
-            "critical_issues_addressed": 1
+            "critical_issues_addressed": 0
         },
         "status": "SUCCESS"
     },
     {
-        "id": "dbd5e198-9d6b-4066-bce5-60c3738953c3",
-        "timestamp": "2026-01-31T19:07:59.479528",
+        "id": "7a05e138-e648-46fc-b21b-9a3b56ff260b",
+        "timestamp": "2026-02-28T17:14:24.783662",
         "agent_name": "JudgeAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "DEBUG",
         "details": {
-            "input_prompt": "Execute tests on sandbox",
-            "output_response": "Test execution completed: 10 passed, 0 failed, 0 errors",
-            "target_dir": "sandbox",
-            "passed": 10,
+            "input_prompt": "Execute tests on sandbox/test_local",
+            "output_response": "Test execution completed: 8 passed, 0 failed, 0 errors",
+            "target_dir": "sandbox/test_local",
+            "passed": 8,
             "failed": 0,
             "errors": 0,
             "total_issues": 0

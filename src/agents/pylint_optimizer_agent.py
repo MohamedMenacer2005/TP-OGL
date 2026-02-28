@@ -379,7 +379,7 @@ class PylintOptimizerAgent(BaseAgent):
     
     def __init__(self, 
                  agent_name: str = "PylintOptimizerAgent",
-                 model: str = "models/gemini-2.5-flash"):
+                 model: str = "llama-3.3-70b-versatile"):
         """
         Initialize optimizer.
         

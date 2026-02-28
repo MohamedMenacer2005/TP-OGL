@@ -23,7 +23,7 @@ class CorrectorAgent(BaseAgent):
     - No hardcoded pattern matching
     """
 
-    def __init__(self, model: str = "models/gemini-2.5-flash"):
+    def __init__(self, model: str = "llama-3.3-70b-versatile"):
         super().__init__(agent_name="CorrectorAgent", model=model)
         self.model = model
         self.llm_client = LLMClient(model=model)
