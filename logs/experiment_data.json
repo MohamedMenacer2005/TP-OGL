@@ -1,30 +1,50 @@
 [
     {
-        "id": "9e233e6e-da9f-4d74-95d6-eb9eb0f87b62",
-        "timestamp": "2026-01-31T19:07:46.796951",
+        "id": "4b7a5599-4be3-4a45-a861-d239f9a7315a",
+        "timestamp": "2026-02-28T23:34:19.922553",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for test_case_1.py",
-            "output_response": "Pylint score: 0.00/10",
-            "filename": "test_case_1.py",
-            "pylint_score": 0.0
+            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\ndef count_down(n):\n    while n > 0:\n        print(n)\n        n -= 1  # Fix: n should decrease, not increase\n```",
+            "output_response": "Found 1 potential issues in logic_bug.py",
+            "filename": "logic_bug.py",
+            "code_length": 107,
+            "line_count": 4,
+            "issues_found": 1,
+            "issues": [
+                "Using print() statements without logging module"
+            ],
+            "complex_functions": 0
         },
         "status": "SUCCESS"
     },
     {
-        "id": "db22c5bb-44a9-424a-a710-38475fcae980",
-        "timestamp": "2026-01-31T19:07:46.800970",
+        "id": "151337a6-3233-4a3e-8256-97809b3c1d04",
+        "timestamp": "2026-02-28T23:34:21.604025",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\n\"\"\"\nInternal test dataset - Case 3: Division by zero\nValidates fix validation through Judge\n\"\"\"\n\ndef divide_numbers(a, b):\n    \"\"\"Divide without zero check\"\"\"\n    return a / b  # BUG: division by zero not handled\n\n```",
-            "output_response": "Found 0 potential issues in test_case_3.py",
-            "filename": "test_case_3.py",
-            "code_length": 213,
-            "line_count": 8,
+            "input_prompt": "Analyze code quality with pylint for logic_bug.py",
+            "output_response": "Pylint score: 2.50/10",
+            "filename": "logic_bug.py",
+            "pylint_score": 2.5
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "9d96506b-c11f-4e5a-a204-20498f72b207",
+        "timestamp": "2026-02-28T23:34:21.607529",
+        "agent_name": "AuditorAgent",
+        "model_used": "llama-3.3-70b-versatile",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\nimport sys\nimport os\nsys.path.insert(0, os.path.dirname(__file__))\n\nfrom bad_syntax import calculate_sum\n\n\ndef test_calculate_sum_positive():\n    assert calculate_sum(2, 3) == 5\n\n\ndef test_calculate_sum_zeros():\n    assert calculate_sum(0, 0) == 0\n\n\ndef test_calculate_sum_negative():\n    assert calculate_sum(-1, -4) == -5\n\n\ndef test_calculate_sum_mixed():\n    assert calculate_sum(10, -3) == 7\n\n```",
+            "output_response": "Found 0 potential issues in test_bad_syntax.py",
+            "filename": "test_bad_syntax.py",
+            "code_length": 396,
+            "line_count": 21,
             "issues_found": 0,
             "issues": [],
             "complex_functions": 0
@@ -32,31 +52,31 @@
         "status": "SUCCESS"
     },
     {
-        "id": "132ae6f6-3a69-49c8-a3ea-6ce5c2980617",
-        "timestamp": "2026-01-31T19:07:46.977248",
+        "id": "8cbeda33-1452-447b-8eba-e591d5404d24",
+        "timestamp": "2026-02-28T23:34:21.627621",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for test_case_2.py",
-            "output_response": "Pylint score: 6.67/10",
-            "filename": "test_case_2.py",
-            "pylint_score": 6.67
+            "input_prompt": "Analyze code quality with pylint for messy_code.py",
+            "output_response": "Pylint score: 3.33/10",
+            "filename": "messy_code.py",
+            "pylint_score": 3.33
         },
         "status": "SUCCESS"
     },
     {
-        "id": "b75410aa-f326-4120-ab06-b4515937c422",
-        "timestamp": "2026-01-31T19:07:46.988325",
+        "id": "7407285c-1e79-4dce-a174-7662f3fae95f",
+        "timestamp": "2026-02-28T23:34:21.644157",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\ndef add(a, b):\n    return a + b\n\n```",
-            "output_response": "Found 0 potential issues in test_project\\exemple.py",
-            "filename": "test_project\\exemple.py",
-            "code_length": 32,
-            "line_count": 2,
+            "input_prompt": "Identify Python code issues. List each on separate line or 'None' if clean.\n```\nimport sys\nimport os\nsys.path.insert(0, os.path.dirname(__file__))\n\nfrom logic_bug import count_down\n\n\ndef test_count_down_decrements(monkeypatch):\n    \"\"\"count_down(5) should print 5, 4, 3, 2, 1 and stop.\"\"\"\n    calls = []\n\n    def fake_print(n):\n        calls.append(n)\n        if len(calls) > 20:\n            raise RuntimeError(\"Infinite loop detected: n is not decreasing\")\n\n    monkeypatch.setattr(\"builtins.print\", fake_print)\n    count_down(5)\n    assert calls == [5, 4, 3, 2, 1], f\"Expected [5,4,3,2,1] but got {calls}\"\n\n\ndef test_count_down_single(monkeypatch):\n    \"\"\"count_down(1) should print just 1.\"\"\"\n    calls = []\n\n    def fake_print(n):\n        calls.append(n)\n        if len(calls) > 10:\n            raise RuntimeError(\"Infinite loop detected\")\n\n    monkeypatch.setattr(\"builtins.print\", fake_print)\n    count_down(1)\n    assert calls == [1]\n\n\ndef test_count_down_zero(monkeypatch):\n    \"\"\"count_down(0) should print nothing.\"\"\"\n    calls = []\n    monkeypatch.setattr(\"builtins.print\", lambda n: calls.append(n))\n    count_down(0)\n    assert calls == []\n\n```",
+            "output_response": "Found 0 potential issues in test_logic_bug.py",
+            "filename": "test_logic_bug.py",
+            "code_length": 1073,
+            "line_count": 41,
             "issues_found": 0,
             "issues": [],
             "complex_functions": 0
@@ -64,71 +84,57 @@
         "status": "SUCCESS"
     },
     {
-        "id": "76fe3787-e2f6-4830-be8f-f890e162d1c3",
-        "timestamp": "2026-01-31T19:07:47.671098",
+        "id": "6b54ee89-2b7c-46f7-b2cf-c8353aac9571",
+        "timestamp": "2026-02-28T23:34:22.070298",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Analyze code quality with pylint for buggy_test.py",
-            "output_response": "Pylint score: 6.83/10",
-            "filename": "buggy_test.py",
-            "pylint_score": 6.83
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "12099fe6-a14c-4677-9c24-54637a81dd76",
-        "timestamp": "2026-01-31T19:07:48.954949",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Analyze code quality with pylint for test_case_3.py",
-            "output_response": "Pylint score: 10.00/10",
-            "filename": "test_case_3.py",
-            "pylint_score": 10.0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "6bee8b48-26c8-4266-b3ad-df1fb8789043",
-        "timestamp": "2026-01-31T19:07:49.082883",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Analyze code quality with pylint for test_project\\exemple.py",
-            "output_response": "Pylint score: 0.00/10",
-            "filename": "test_project\\exemple.py",
-            "pylint_score": 0.0
-        },
-        "status": "SUCCESS"
-    },
-    {
-        "id": "f914cb7b-3650-4122-8665-544a0c14f8e6",
-        "timestamp": "2026-01-31T19:07:51.505549",
-        "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
-        "action": "CODE_ANALYSIS",
-        "details": {
-            "input_prompt": "Analyze code quality with pylint for test_buggy_test.py",
+            "input_prompt": "Analyze code quality with pylint for conftest.py",
             "output_response": "Pylint score: 6.67/10",
-            "filename": "test_buggy_test.py",
+            "filename": "conftest.py",
             "pylint_score": 6.67
         },
         "status": "SUCCESS"
     },
     {
-        "id": "ad5e5be8-8ac4-41f1-af64-961831a36345",
-        "timestamp": "2026-01-31T19:07:52.851624",
+        "id": "80ae4bac-fa77-4695-a9c6-394849dd78c8",
+        "timestamp": "2026-02-28T23:34:23.712500",
         "agent_name": "AuditorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_ANALYSIS",
         "details": {
-            "input_prompt": "Audited 6 files in sandbox",
+            "input_prompt": "Analyze code quality with pylint for test_bad_syntax.py",
+            "output_response": "Pylint score: 5.00/10",
+            "filename": "test_bad_syntax.py",
+            "pylint_score": 5.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "d4858969-827b-4747-b185-13a9e514f5ad",
+        "timestamp": "2026-02-28T23:34:23.714004",
+        "agent_name": "AuditorAgent",
+        "model_used": "llama-3.3-70b-versatile",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Analyze code quality with pylint for test_messy_code.py",
+            "output_response": "Pylint score: 5.00/10",
+            "filename": "test_messy_code.py",
+            "pylint_score": 5.0
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "id": "bfca146c-4a2c-4516-acca-b909fe88c857",
+        "timestamp": "2026-02-28T23:34:24.186195",
+        "agent_name": "AuditorAgent",
+        "model_used": "llama-3.3-70b-versatile",
+        "action": "CODE_ANALYSIS",
+        "details": {
+            "input_prompt": "Audited 7 files in sandbox/hidden_dataset",
             "output_response": "Audit complete: 1 total issues found, 0 files with errors",
-            "files_audited": 6,
+            "files_audited": 7,
             "total_issues": 1,
             "files_with_errors": 0,
             "parallel_processing": true
@@ -136,10 +142,10 @@
         "status": "SUCCESS"
     },
     {
-        "id": "9a5e5bff-6a46-4b86-9e74-f18b5c26efde",
-        "timestamp": "2026-01-31T19:07:58.158685",
+        "id": "b558990c-35d0-4702-a317-f551366c6a50",
+        "timestamp": "2026-02-28T23:34:24.657124",
         "agent_name": "CorrectorAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "CODE_GEN",
         "details": {
             "input_prompt": "Generated corrections for 0 files",
@@ -151,16 +157,16 @@
         "status": "SUCCESS"
     },
     {
-        "id": "dbd5e198-9d6b-4066-bce5-60c3738953c3",
-        "timestamp": "2026-01-31T19:07:59.479528",
+        "id": "2aa0ec24-931c-4db7-9ff2-5804106f886f",
+        "timestamp": "2026-02-28T23:34:25.137243",
         "agent_name": "JudgeAgent",
-        "model_used": "models/gemini-2.5-flash",
+        "model_used": "llama-3.3-70b-versatile",
         "action": "DEBUG",
         "details": {
-            "input_prompt": "Execute tests on sandbox",
-            "output_response": "Test execution completed: 10 passed, 0 failed, 0 errors",
-            "target_dir": "sandbox",
-            "passed": 10,
+            "input_prompt": "Execute tests on sandbox/hidden_dataset",
+            "output_response": "Test execution completed: 14 passed, 0 failed, 0 errors",
+            "target_dir": "sandbox/hidden_dataset",
+            "passed": 14,
             "failed": 0,
             "errors": 0,
             "total_issues": 0

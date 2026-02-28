@@ -15,13 +15,13 @@ class BaseAgent(ABC):
     Handles logging automatically; child agents focus on analysis/generation logic.
     """
 
-    def __init__(self, agent_name: str, model: str = "models/gemini-2.5-flash"):
+    def __init__(self, agent_name: str, model: str = "llama-3.3-70b-versatile"):
         """
         Initialize agent.
         
         Args:
             agent_name: Unique identifier for this agent (e.g., "CodeAuditor", "Refactorer")
-            model: LLM model to use (default: models/gemini-2.5-flash)
+            model: LLM model to use (default: llama-3.3-70b-versatile)
         """
         self.agent_name = agent_name
         self.model = model

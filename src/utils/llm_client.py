@@ -1,6 +1,6 @@
 """
 LLM Client Utility for Agent Integration
-Provides interface to Google Generative AI (Gemini) for semantic code analysis and generation.
+Provides interface to Groq API for semantic code analysis and generation.
 """
 
 import os
@@ -13,9 +13,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 try:
-    import google.generativeai as genai
+    from groq import Groq
 except ImportError:
-    genai = None
+    Groq = None
 
 
 logger = logging.getLogger(__name__)
@@ -23,35 +23,35 @@ logger = logging.getLogger(__name__)
 
 class LLMClient:
     """
-    Client for interacting with Google Generative AI (Gemini).
+    Client for interacting with Groq API.
     Handles API initialization and request execution.
     """
     
-    def __init__(self, model: str = "gemini-1.5-flash", api_key: Optional[str] = None):
+    def __init__(self, model: str = "llama-3.3-70b-versatile", api_key: Optional[str] = None):
         """
         Initialize LLM client.
         
         Args:
-            model: Model name (default: gemini-1.5-flash)
-            api_key: Optional API key (reads from GOOGLE_API_KEY env if not provided)
+            model: Model name (default: llama-3.3-70b-versatile)
+            api_key: Optional API key (reads from GROQ_API_KEY env if not provided)
             
         Raises:
-            RuntimeError: If genai not installed or API key missing
+            RuntimeError: If groq not installed or API key missing
             ValueError: If API key is empty
         """
-        if genai is None:
+        if Groq is None:
             raise RuntimeError(
-                "langchain-google-genai not installed. "
-                "Install with: pip install langchain-google-genai"
+                "groq not installed. "
+                "Install with: pip install groq"
             )
         
         self.model = model
         
         # Get API key
-        api_key = api_key or os.getenv("GOOGLE_API_KEY")
+        api_key = api_key or os.getenv("GROQ_API_KEY")
         if not api_key:
             raise ValueError(
-                "GOOGLE_API_KEY not found. Set environment variable or pass api_key parameter."
+                "GROQ_API_KEY not found. Set environment variable or pass api_key parameter."
             )
         
         if not api_key.strip():
@@ -59,8 +59,7 @@ class LLMClient:
         
         # Configure API
         try:
-            genai.configure(api_key=api_key)
-            self.client = genai.GenerativeModel(model)
+            self.client = Groq(api_key=api_key)
             logger.info(f"Initialized LLM client with model: {model}")
         except Exception as e:
             logger.error(f"Failed to initialize LLM client: {e}")
@@ -102,19 +101,18 @@ class LLMClient:
         
         try:
             logger.debug(f"Sending correction request to LLM for issue: {issue}")
-            response = self.client.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    max_output_tokens=1024,
-                    temperature=0.3,  # Low temperature for deterministic fixes
-                )
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1024,
+                temperature=0.3,
             )
             
-            if not response or not response.text:
+            if not response or not response.choices:
                 raise RuntimeError("LLM returned empty response")
             
             # Extract code block from response
-            corrected = response.text.strip()
+            corrected = response.choices[0].message.content.strip()
             if corrected.endswith("```"):
                 corrected = corrected[:-3].strip()
             
@@ -147,20 +145,19 @@ class LLMClient:
         )
         
         try:
-            response = self.client.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    max_output_tokens=512,
-                    temperature=0.2,
-                )
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=512,
+                temperature=0.2,
             )
             
-            if not response or not response.text:
+            if not response or not response.choices:
                 raise RuntimeError("LLM returned empty response")
             
             # Parse JSON response
             import json
-            text = response.text.strip()
+            text = response.choices[0].message.content.strip()
             # Remove markdown code blocks if present
             if text.startswith("```"):
                 text = text.split("```")[1]
@@ -203,19 +200,18 @@ class LLMClient:
         )
         
         try:
-            response = self.client.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    max_output_tokens=512,
-                    temperature=0.2,
-                )
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=512,
+                temperature=0.2,
             )
             
-            if not response or not response.text:
+            if not response or not response.choices:
                 return []
             
             import json
-            text = response.text.strip()
+            text = response.choices[0].message.content.strip()
             if text.startswith("```"):
                 text = text.split("```")[1]
                 if text.startswith("json"):

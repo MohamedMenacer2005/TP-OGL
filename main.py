@@ -52,6 +52,128 @@ def validate_target_directory(target_dir: str) -> bool:
     return True
 
 
+def build_fixer_input_from_judge(judge_result: dict, target_dir: str) -> dict:
+    """
+    Transform JudgeAgent output into a format compatible with FixerAgent input.
+    Required because FixerAgent expects {file_results: {...}} but JudgeAgent
+    returns {passed, failed, messages, ...}.
+    """
+    import os
+    messages = judge_result.get("messages", [])
+    failure_text = "\n".join(messages)
+    source_files = [
+        f for f in os.listdir(target_dir)
+        if f.endswith(".py") and not f.startswith("test_") and f != "conftest.py"
+    ]
+    file_results = {
+        fname: {
+            "analysis": {
+                "issues": [
+                    f"The following pytest failures were reported. "
+                    f"Fix the logic in this file so all tests pass:\n\n{failure_text}"
+                ]
+            }
+        }
+        for fname in source_files
+    }
+    return {"file_results": file_results, "all_issues": [failure_text]}
+
+
+def generate_tests_if_missing(target_dir: str) -> bool:
+    """
+    Auto-generate pytest tests if none exist in the target directory.
+    Returns True if tests were generated, False if tests already existed.
+    """
+    import os
+    from src.utils.logger import log_experiment, ActionType
+    from dotenv import load_dotenv
+    load_dotenv()
+
+    test_files = [f for f in os.listdir(target_dir) if f.startswith("test_") and f.endswith(".py")]
+    if test_files:
+        print(f"[OK] Tests already present: {test_files}")
+        return False
+
+    print("[INFO] No test files found. Auto-generating tests with LLM...")
+
+    source_files = [
+        f for f in os.listdir(target_dir)
+        if f.endswith(".py") and not f.startswith("test_") and f != "conftest.py"
+    ]
+
+    if not source_files:
+        print("[WARN] No source files found to generate tests for.")
+        return False
+
+    try:
+        from groq import Groq
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+        for source_file in source_files:
+            source_path = os.path.join(target_dir, source_file)
+            with open(source_path, "r", encoding="utf-8") as f:
+                source_code = f.read()
+
+            prompt = (
+                f"Write a complete pytest test file for the following Python module.\n"
+                f"File: {source_file}\n\n"
+                f"Rules:\n"
+                f"- Test each function with correct expected values (not the current buggy output)\n"
+                f"- Use simple assert statements\n"
+                f"- Do NOT import from conftest\n"
+                f"- Add: import sys, sys.path.insert(0, '.') at the top\n"
+                f"- Return ONLY the Python test code, no explanation\n\n"
+                f"```python\n{source_code}\n```"
+            )
+
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=2048,
+                temperature=0.2,
+            )
+
+            test_code = response.choices[0].message.content.strip()
+            if "```python" in test_code:
+                test_code = test_code.split("```python")[1].split("```")[0].strip()
+            elif test_code.startswith("```"):
+                test_code = test_code[3:].strip()
+                if test_code.endswith("```"):
+                    test_code = test_code[:-3].strip()
+
+            test_filename = f"test_{source_file}"
+            test_path = os.path.join(target_dir, test_filename)
+            with open(test_path, "w", encoding="utf-8") as f:
+                f.write(test_code)
+            print(f"[OK] Generated {test_filename}")
+
+            log_experiment(
+                agent_name="TestGenerator",
+                model_used="llama-3.3-70b-versatile",
+                action=ActionType.CODE_GEN,
+                details={
+                    "input_prompt": prompt,
+                    "output_response": test_code,
+                    "target_file": source_file,
+                    "generated_test_file": test_filename,
+                },
+                status="SUCCESS"
+            )
+
+        # Create conftest.py for sys.path
+        conftest_path = os.path.join(target_dir, "conftest.py")
+        if not os.path.exists(conftest_path):
+            with open(conftest_path, "w", encoding="utf-8") as f:
+                f.write("import sys\nimport os\nsys.path.insert(0, os.path.dirname(__file__))\n")
+            print("[OK] Created conftest.py")
+
+        return True
+
+    except Exception as e:
+        print(f"[WARN] Test generation failed: {e}")
+        return False
+
+
 def main():
     """
     Main orchestration loop - Controls execution of The Refactoring Swarm
@@ -116,6 +238,9 @@ def main():
         print("\n[NOTE] Auditor provides REFACTORING PLAN only.")
         print("       Static analysis success does NOT guarantee runtime correctness.")
         print("       Proceeding to test execution via JudgeAgent...")
+
+        # ===== AUTO-GENERATE TESTS IF MISSING =====
+        generate_tests_if_missing(target_dir)
         
         # ===== ROLE BOUNDARY COMMENT =====
         # IMPORTANT: The orchestration layer ONLY controls the FLOW between agents.
@@ -142,7 +267,10 @@ def main():
             
             # ===== FIXER PHASE =====
             print(f"\n[FIXER] Applying corrections (iteration {iteration})...")
-            fixer_input = audit_result if iteration == 1 else judge_result
+            if iteration == 1:
+                fixer_input = audit_result
+            else:
+                fixer_input = build_fixer_input_from_judge(judge_result, target_dir)
             fixer_result = fixer.execute(target_dir, fixer_input)
             print(f"[OK] Fixer applied corrections")
             print(f"  Total corrections: {fixer_result.get('total_corrections', 0)}")
